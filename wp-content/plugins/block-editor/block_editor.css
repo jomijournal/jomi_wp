@@ -1,0 +1,56 @@
+/* Block Editor Css */
+@CHARSET "UTF-8";
+
+div.metaeditdiv {
+	display: none;
+}
+
+div#blockeditor-menu {
+	margin: 25px 0 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+div#blockeditor-menu .clear {
+	clear: both;
+}
+
+div#blockeditor-menu ul {
+	list-style-none: none;
+}
+
+div#blockeditor-menu ul li {
+	float: left;
+}
+
+div#blockeditor-menu ul li a {
+	padding: 7px 15px;
+	margin-right: 5px;
+	background: #c7c7c7;
+	
+	color: #5c5e5e;
+	text-decoration: none;
+	
+	border-radius: 6px 6px 0px 0px;
+	-moz-border-radius: 6px 6px 0px 0px;
+	-webkit-border-radius: 6px 6px 0px 0px;
+	
+	border-top: 1px solid #221F20;
+	border-left: 1px solid #221F20;
+	border-right: 1px solid #221F20;
+}
+
+div#blockeditor-menu ul li a:hover {
+	color: #FFF;
+	background: #888787;
+}
+
+div#blockeditor-menu ul li a.current-item {
+	color: #5c5e5e;
+	background: #FFF;
+	border-bottom: 1px solid #FFF;
+}
+
+p.be-meta-link {
+	text-align: right;
+	padding: 0 8px;
+}

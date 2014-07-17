@@ -1,0 +1,58 @@
+.debug-this{
+	padding:20px;
+}
+h3{
+	margin-bottom:8px;
+	color:#555;
+	font-size:14px;
+}
+.current{
+	background: yellow;
+}
+.error{
+	color:red;
+}
+.okay{
+	color:green;
+}
+.emphasize{
+	background:#2467ac;
+	color:#fff;
+	padding-left:10px;
+}
+.underline{
+	text-decoration: underline;
+}
+.escape{
+	position: absolute;
+	top:40px;
+	right:25px;
+	width:18px;
+	height:20px;
+	padding:3px;
+	background: #000;
+	color:#fff;
+	border-radius: 25px;
+	text-align: center;
+}
+.escape:hover{
+	background:#444 !important;
+	color:#fff;
+	text-decoration: none;
+}
+
+.header-links{
+	margin-left:0;
+}
+
+.header-links li{
+	list-style: none;
+	display:inline-block;
+	margin-right:10px;
+	border-right:1px solid #777;
+	padding-right:10px;
+}
+
+.header-links li:last-child{
+	border:none;
+}
