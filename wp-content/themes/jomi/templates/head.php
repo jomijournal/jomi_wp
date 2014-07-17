@@ -54,7 +54,7 @@ if($user && isset($_GET["logout"]))
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php wp_title('|', true, 'right'); ?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 
 	<!-- TYPEKIT -->
 	<script type="text/javascript" src="//use.typekit.net/juj1iti.js"></script>

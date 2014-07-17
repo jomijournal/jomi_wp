@@ -16,19 +16,19 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'jomi');
+define('DB_NAME', 'jomi_7_17_2014');
 
 /** MySQL database username */
-#define('DB_USER', 'jomi');
-define('DB_USER', 'root');
+define('DB_USER', 'jomi_test');
+#define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
-#define('DB_PASSWORD', 'jomicat1234');
+#define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'jomicat1234');
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
-#define('DB_HOST', 'squash.jomi.com');
+#define('DB_HOST', 'localhost');
+define('DB_HOST', 'squash.jomi.com');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
