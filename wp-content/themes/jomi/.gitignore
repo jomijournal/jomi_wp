@@ -1,0 +1,14 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-
+
+node_modules
+assets/css/main.min.css.map
+assets/css/main.min.css
+assets/css/*.min.css
+assets/js/scripts.min.js
+assets/js/scripts.js
+lib/scripts.php
+*.sublime-project
+*.sublime-workspace
+assets/js/*.min.js
+refresh.sh
