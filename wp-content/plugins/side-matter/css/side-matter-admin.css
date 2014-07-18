@@ -1,0 +1,72 @@
+/*
+side-matter-admin.css
+Version 1.4
+
+Plugin: Side Matter
+Author: Christopher Setzer
+URI: http://wordpress.org/extend/plugins/side-matter/
+License: GPLv2
+*/
+
+.side-matter-preview {
+	background: #eee;
+	border: 1px solid #bbb;
+	border-radius: 2px;
+	padding: 1.25em 2em;
+	width: 32em;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	cursor: pointer;
+}
+
+.side-matter-preview:focus {
+	outline: thin dotted;
+}
+
+.side-matter-preview-dark {
+	background-color: #333;
+	color: #bbb;
+}
+
+.side-matter-preview-main {
+	width: 20em;
+	padding-right: 2em;
+	float: left;
+}
+
+.side-matter-preview-main, .side-matter-preview-side {
+	line-height: 1.6em;
+}
+
+.side-matter-preview-side {
+	width: 10em;
+	float: left;
+	font-size: small;
+}
+
+.side-matter-preview-sup {
+	position: relative;
+	top: -0.5em;
+	vertical-align: baseline;
+	font-size: 0.75em;
+	line-height: 0;
+}
+
+.side-matter-preview-clear {
+	clear: both;
+}
+
+.side-matter-user-colors {
+	margin-left: 18px;
+}
+
+.side-matter-figure-style {
+	color: #333;
+}
+
+.note-adjust-dir {
+	margin-left: 8px;
+}

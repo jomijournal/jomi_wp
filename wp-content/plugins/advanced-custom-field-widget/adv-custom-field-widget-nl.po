@@ -1,0 +1,180 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: advanced-custom-field-widget\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-custom-field-widget\n"
+"POT-Creation-Date: 2010-11-07 00:55+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ronald van der Zwan <ronald@volzin.nl>\n"
+"Language-Team: Ronald van der Zwan <ronald@vdzwan.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: adv-custom-field-widget.php:276
+#: adv-custom-field-widget.php:1009
+msgid "All items"
+msgstr "Alle waarden"
+
+#: adv-custom-field-widget.php:278
+#: adv-custom-field-widget.php:1011
+msgid "Separator"
+msgstr "Seperator"
+
+#: adv-custom-field-widget.php:912
+msgid "ACFW instance ID (use this with shortcode and theme function):"
+msgstr "ACFW object ID (gebruik dit bij shortcode en thema functies)"
+
+#: adv-custom-field-widget.php:912
+msgid "(Unknown - Save the configuration)"
+msgstr "(Onbekend - Sla de configuratie op )"
+
+#: adv-custom-field-widget.php:915
+#, php-format
+msgid "Enter the custom field key <a href=\"%s\">[?]</a>  to locate in single posts/pages. When found, the corresponding value is displayed along with widget title and text (if provided)."
+msgstr "Voer een aangepast veld in <a href=\"%s\">[?]</a> om te zoeken in berichten/pagina's. Als het wordt gevonden, dan wordt de bijbehorende waarde getoond samen met de widget titel en tekst (indien opgegeven)."
+
+#: adv-custom-field-widget.php:918
+msgid "Primary Custom Field Key (required - Used for randomised content):"
+msgstr "Eerste sleutel voor aangepast veld (verplicht - Wordt gebruikt voor willekeurige inhoud):"
+
+#: adv-custom-field-widget.php:919
+#: adv-custom-field-widget.php:923
+msgid "The <strong>key</strong> must match <em>exactly</em> as in posts/pages."
+msgstr "De <strong> sleutel</strong> moet <em>precies</em> overeenkomen met die in de berichten/pagina's."
+
+#: adv-custom-field-widget.php:922
+msgid "Secondary Custom Field Key (optional - Used if no content for primary on single post pages):"
+msgstr "Tweede sleutel voor aangepast veld (optioneel - Wordt gebruikt als er geen inhoud is bij de eerste sleutel)"
+
+#: adv-custom-field-widget.php:928
+msgid "Widget Title:"
+msgstr "Widget Titel:"
+
+#: adv-custom-field-widget.php:934
+msgid "Widget Text:"
+msgstr "Widget Tekst:"
+
+#: adv-custom-field-widget.php:941
+msgid "Widget Pretext:"
+msgstr "Widget Begintekst:"
+
+#: adv-custom-field-widget.php:946
+msgid "Widget Posttext:"
+msgstr "Widget Eindtekst:"
+
+#: adv-custom-field-widget.php:952
+msgid "Fixed Text 1 Always:"
+msgstr "Vaste Tekst 1 Altijd zichtbaar:"
+
+#: adv-custom-field-widget.php:957
+msgid "Fixed Text 1 Content Found:"
+msgstr "Vaste Tekst 1 bij Inhoud gevonden:"
+
+#: adv-custom-field-widget.php:963
+msgid "Fixed Text 1 No Content:"
+msgstr "Vaste Tekst 1 Geen inhoud:"
+
+#: adv-custom-field-widget.php:968
+msgid "Fixed Text 1 Random Content:"
+msgstr "Vaste Tekst 1 Willekeurige inhoud:"
+
+#: adv-custom-field-widget.php:974
+msgid "Fixed Text 2 Always:"
+msgstr "Vaste Tekst 2 Altijd zichtbaar:"
+
+#: adv-custom-field-widget.php:979
+msgid "Fixed Text 2 Content Found:"
+msgstr "Vaste Tekst 2 bij Inhoud gevonden:"
+
+#: adv-custom-field-widget.php:985
+msgid "Fixed Text 2 No Content:"
+msgstr "Vaste Tekst 2 Geen inhoud:"
+
+#: adv-custom-field-widget.php:990
+msgid "Fixed Text 2 Random Content:"
+msgstr "Vaste Tekst 2 Willekeurige inhoud:"
+
+#: adv-custom-field-widget.php:999
+msgid "When displaying the content of a custom field, the widget evals an string building command that builds main content.  If the Content Generator field is present, the custom field content is loaded into the variable \\$acfw_content and then the evald code uses the string you put in here as the basis for the widget content instead.  This allows you to generate URL's and other content as the string $acfw_content in the Content Generator field below is replaced by the actual content from the post.  $data1-$data5 are loaded with the values from the custom key specified by Additional Data Field 1 through 5, if values exist in the post used as the data source.  You can also use $pageurl which contains the URL of the post which was the source for the rest of the widget content."
+msgstr "Als de inhoud van een aangepast veld wordt getoond, dat voert de widget een stringcommando uit om de inhoud op te bouwen. Als u de Inhoud Generator gebruikt, dan wordt de inhoud van het aangepaste veld geladen in de variabele \\$afcw_content. De uitgevoerde code gebruikt dan de string in de Generator als inhoud voor de widget. Hierdoor kunt u URL's en andere inhoud genereren, omdat de string $acfw_content in de onderstaande Inhoud Generator wordt vervangen door de werkelijk waarde van het aangepaste veld in het bericht. De waarde van de aangepaste velden die u invoert in de Extra Data velden 1 tot 5 wordt geladen in de variabelen $data1-$data5. Vooropgesteld dat die waarden ook in het bericht bestaan. De variabele $pageurl bevat de url van het bron bericht voor de widget.  "
+
+#: adv-custom-field-widget.php:1002
+msgid "Additional data fields are optional.  They are used to specify custom fields, the values of which will be loaded into the variables $data1-$data5 which can be used in the content generator."
+msgstr "Extra Data velden zijn optioneel. U kunt hiermee de waarden van de ingevulde extra aangepaste velden in de variabelen $data1-$data5 laden. Die variabelen kunt u gebruiken in de Inhoud Generator.  "
+
+#: adv-custom-field-widget.php:1003
+msgid "Select <i>Load all custom fields</i> or specify the custom fields you wish to load.  When selecting <i>Load all custom fields</i>, the data is loaded into the array <i>$custom</i>"
+msgstr "Kies <i>Laad alle aangepaste velden</i> of specificeer de aangepaste velden die u wilt laden. Kiest u voor de eerste optie dan kunt u de waarden aanroepen via $acfw_[veldnaam]."
+
+#: adv-custom-field-widget.php:1007
+msgid "Load all custom fields:"
+msgstr "Laad alle aangepaste velden:"
+
+#: adv-custom-field-widget.php:1015
+msgid "Additional Data Field 1:"
+msgstr "Extra Data Veld 1:"
+
+#: adv-custom-field-widget.php:1018
+msgid "Additional Data Field 2:"
+msgstr "Extra Data Veld 2:"
+
+#: adv-custom-field-widget.php:1021
+msgid "Additional Data Field 3:"
+msgstr "Extra Data Veld 3:"
+
+#: adv-custom-field-widget.php:1024
+msgid "Additional Data Field 4:"
+msgstr "Extra Data Veld 4:"
+
+#: adv-custom-field-widget.php:1027
+msgid "Additional Data Field 5:"
+msgstr "Extra Data Veld 5:"
+
+#: adv-custom-field-widget.php:1031
+msgid "Content Generator:"
+msgstr "Inhoud Generator:"
+
+#: adv-custom-field-widget.php:1035
+msgid "Process content generator as script:"
+msgstr "Voer Inhoud Generator uit als script:"
+
+#: adv-custom-field-widget.php:1039
+msgid "Do not run content generator through 'convert_chars' filter:"
+msgstr "Gebruik geen 'convert chars' filter voor de Inhoud Generator:"
+
+#: adv-custom-field-widget.php:1046
+msgid "Show random on single post pages:"
+msgstr "Toon willekeurig op een individuele (bericht)pagina:"
+
+#: adv-custom-field-widget.php:1050
+msgid "Show random on other pages:"
+msgstr "Toon willekeurig op andere pagina's:"
+
+#: adv-custom-field-widget.php:1055
+msgid "Do not filter content:"
+msgstr "Inhoud niet filtreren:"
+
+#: adv-custom-field-widget.php:1058
+msgid "Filtering beautifies some of the HTML output by the widget.  For example if you have picture dimensions WWWxHHH, the x will be converted to a nicer looking character.  This can result in the failure of links etc.  If this is occuring, check this box, it will turn off filtering."
+msgstr "Filtratie maakt bepaalde HTML uitvoer van de widget mooier. Als u bijvoorbeeld het afbeeldingsformaat WWWxHH gebruikt, wordt de x naar een visueel mooier karakter omgezet. Hierdoor kunnen er wel fouten optreden in links en dergelijke. Vink dit veld aan om filtratie uit te zetten."
+
+#: adv-custom-field-widget.php:1060
+msgid "Widget index:"
+msgstr "Widget overzicht:"
+
+#: adv-custom-field-widget.php:1067
+#, php-format
+msgid "For assistance with ACFW, post your comments on <a href=\"%1$s\" target=\"_BLANK\">my blog</a>, and to read the on-line user manual visit <a href=\"%2$s\" target=\"_BLANK\">my wiki</a>.  <i>Thanks, AthenaOfDelphi</i>"
+msgstr "Voor hulp met ACFW, plaats een reactie op <a href=\"%1$s\" target=\"_BLANK\">mijn blog</a>. Kijk voor een online gebruikershandleiding op mijn <a href=\"%2$s\" target=\"_BLANK\">mijn wiki</a>. <i>Dank u wel, AthenaOfDelphi</i>"
+
+#: adv-custom-field-widget.php:1115
+msgid "Display page/post custom field value for a set key"
+msgstr "Toon aangepaste velden van pagina's berichten via een ingestelde sleutel"
+
+#: adv-custom-field-widget.php:1124
+msgid "Adv. Custom Field"
+msgstr "Geavanceerd Aangepast Veld "
+

@@ -1,0 +1,30 @@
+/*
+side-matter.css
+Version 1.4
+
+Plugin: Side Matter
+Author: Christopher Setzer
+URI: http://wordpress.org/extend/plugins/side-matter/
+License: GPLv2
+*/
+
+/*
+A guide to further styling Side Matter elements with CSS may be found in `readme.txt` and online at <http://wordpress.org/extend/plugins/side-matter/other_notes/>.
+
+The below is default Side Matter CSS. These rules have low specificity, and are easily superseded by theme or user style settings.
+*/
+
+a.side-matter:link,
+a.side-matter:visited,
+a.side-matter:hover,
+a.side-matter:active {
+	text-decoration: none;
+}
+
+sup.side-matter-sup {
+	position: relative;
+	top: -0.5em;
+	vertical-align: baseline;
+	font-size: 0.75em;
+	line-height: 0;
+}

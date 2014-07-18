@@ -1,0 +1,27 @@
+
+html, body {
+	margin: 0;
+}
+
+body {
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	color: #222222;
+}
+
+.t {
+	display: table;
+	table-layout:fixed;
+	border-collapse:collapse;
+	empty-cells: show;
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+	margin:10px 0 0 10px;
+}
+.r { display: table-row; }
+.c { display: table-cell; padding:6px; border-left:1px solid black; min-width:80px; }
+
+.r.header {
+	background-color:#dadada;
+}

@@ -1,0 +1,212 @@
+# ADVANCED CUSTOM FIELD WIDGET for WordPress
+# Copyright (C) 2008-2010 CHRISTINA LOUISE WARNE
+# Original 'CUSTOM FIELD WIDGET' Copyright (C) 2008 SCOTT ALLAN WALLICK
+# This file is part of ADVANCED CUSTOM FIELD WIDGET.
+# ADVANCED CUSTOM FIELD WIDGET is free software: you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of
+# the License, or (at your option) any later version.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.991\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-custom-field-widget\n"
+"POT-Creation-Date: 2010-11-07 00:55+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: CHRISTINA LOUISE WARNE <athena@outer-reaches.com>\n"
+"Language-Team: CHRISTINA LOUISE WARNE <athena@outer-reaches.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: adv-custom-field-widget.php:276 adv-custom-field-widget.php:1009
+msgid "All items"
+msgstr ""
+
+#: adv-custom-field-widget.php:278 adv-custom-field-widget.php:1011
+msgid "Separator"
+msgstr ""
+
+#: adv-custom-field-widget.php:912
+msgid "ACFW instance ID (use this with shortcode and theme function):"
+msgstr ""
+
+#: adv-custom-field-widget.php:912
+msgid "(Unknown - Save the configuration)"
+msgstr ""
+
+#: adv-custom-field-widget.php:915
+#, php-format
+msgid ""
+"Enter the custom field key <a href=\"%s\">[?]</a>  to locate in single posts/"
+"pages. When found, the corresponding value is displayed along with widget "
+"title and text (if provided)."
+msgstr ""
+
+#: adv-custom-field-widget.php:918
+msgid "Primary Custom Field Key (required - Used for randomised content):"
+msgstr ""
+
+#: adv-custom-field-widget.php:919 adv-custom-field-widget.php:923
+msgid "The <strong>key</strong> must match <em>exactly</em> as in posts/pages."
+msgstr ""
+
+#: adv-custom-field-widget.php:922
+msgid ""
+"Secondary Custom Field Key (optional - Used if no content for primary on "
+"single post pages):"
+msgstr ""
+
+#: adv-custom-field-widget.php:928
+msgid "Widget Title:"
+msgstr ""
+
+#: adv-custom-field-widget.php:934
+msgid "Widget Text:"
+msgstr ""
+
+#: adv-custom-field-widget.php:941
+msgid "Widget Pretext:"
+msgstr ""
+
+#: adv-custom-field-widget.php:946
+msgid "Widget Posttext:"
+msgstr ""
+
+#: adv-custom-field-widget.php:952
+msgid "Fixed Text 1 Always:"
+msgstr ""
+
+#: adv-custom-field-widget.php:957
+msgid "Fixed Text 1 Content Found:"
+msgstr ""
+
+#: adv-custom-field-widget.php:963
+msgid "Fixed Text 1 No Content:"
+msgstr ""
+
+#: adv-custom-field-widget.php:968
+msgid "Fixed Text 1 Random Content:"
+msgstr ""
+
+#: adv-custom-field-widget.php:974
+msgid "Fixed Text 2 Always:"
+msgstr ""
+
+#: adv-custom-field-widget.php:979
+msgid "Fixed Text 2 Content Found:"
+msgstr ""
+
+#: adv-custom-field-widget.php:985
+msgid "Fixed Text 2 No Content:"
+msgstr ""
+
+#: adv-custom-field-widget.php:990
+msgid "Fixed Text 2 Random Content:"
+msgstr ""
+
+#: adv-custom-field-widget.php:999
+msgid ""
+"When displaying the content of a custom field, the widget evals an string "
+"building command that builds main content.  If the Content Generator field "
+"is present, the custom field content is loaded into the variable \\"
+"$acfw_content and then the evald code uses the string you put in here as the "
+"basis for the widget content instead.  This allows you to generate URL's and "
+"other content as the string $acfw_content in the Content Generator field "
+"below is replaced by the actual content from the post.  $data1-$data5 are "
+"loaded with the values from the custom key specified by Additional Data "
+"Field 1 through 5, if values exist in the post used as the data source.  You "
+"can also use $pageurl which contains the URL of the post which was the "
+"source for the rest of the widget content."
+msgstr ""
+
+#: adv-custom-field-widget.php:1002
+msgid ""
+"Additional data fields are optional.  They are used to specify custom "
+"fields, the values of which will be loaded into the variables $data1-$data5 "
+"which can be used in the content generator."
+msgstr ""
+
+#: adv-custom-field-widget.php:1003
+msgid ""
+"Select <i>Load all custom fields</i> or specify the custom fields you wish "
+"to load.  When selecting <i>Load all custom fields</i>, the data is loaded "
+"into fields with names $acfw_<fieldname> where <fieldname> is the custom "
+"field names with spaces and hyphens removed."
+msgstr ""
+
+#: adv-custom-field-widget.php:1007
+msgid "Load all custom fields:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1015
+msgid "Additional Data Field 1:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1018
+msgid "Additional Data Field 2:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1021
+msgid "Additional Data Field 3:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1024
+msgid "Additional Data Field 4:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1027
+msgid "Additional Data Field 5:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1031
+msgid "Content Generator:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1035
+msgid "Process content generator as script:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1039
+msgid "Do not run content generator through 'convert_chars' filter:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1046
+msgid "Show random on single post pages:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1050
+msgid "Show random on other pages:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1055
+msgid "Do not filter content:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1058
+msgid ""
+"Filtering beautifies some of the HTML output by the widget.  For example if "
+"you have picture dimensions WWWxHHH, the x will be converted to a nicer "
+"looking character.  This can result in the failure of links etc.  If this is "
+"occuring, check this box, it will turn off filtering."
+msgstr ""
+
+#: adv-custom-field-widget.php:1060
+msgid "Widget index:"
+msgstr ""
+
+#: adv-custom-field-widget.php:1067
+#, php-format
+msgid ""
+"For assistance with ACFW, post your comments on <a href=\"%1$s\" target="
+"\"_BLANK\">my blog</a>, and to read the on-line user manual visit <a href=\"%"
+"2$s\" target=\"_BLANK\">my wiki</a>.  <i>Thanks, AthenaOfDelphi</i>"
+msgstr ""
+
+#: adv-custom-field-widget.php:1115
+msgid "Display page/post custom field value for a set key"
+msgstr ""
+
+#: adv-custom-field-widget.php:1124
+msgid "Adv. Custom Field"
+msgstr ""
