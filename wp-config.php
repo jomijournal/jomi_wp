@@ -36,6 +36,21 @@ define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+
+/** local vs remote detection */
+$whitelist = array(
+  '127.0.0.1',
+  '::1'
+);
+// if localhost
+if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
+	define('WP_HOME','http://localhost');
+	define('WP_SITEURL','http://localhost');
+} else {
+	define('WP_HOME','http://squash.jomi.com');
+	define('WP_SITEURL','http://squash.jomi.com');
+}
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
