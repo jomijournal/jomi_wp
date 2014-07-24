@@ -14,6 +14,21 @@
  * @package WordPress
  */
 
+/** local vs remote detection */
+$whitelist = array(
+  '127.0.0.1',
+  '::1'
+);
+// if localhost
+if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
+	define('WP_HOME','http://localhost');
+	define('WP_SITEURL','http://localhost');
+} else {
+	define('WP_HOME','http://squash.jomi.com');
+	define('WP_SITEURL','http://squash.jomi.com');
+}
+
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', 'jomi_7_17_2014');
@@ -92,17 +107,3 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
-
-/** local vs remote detection */
-$whitelist = array(
-  '127.0.0.1',
-  '::1'
-);
-// if localhost
-if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-	define('WP_HOME','http://localhost');
-	define('WP_SITEURL','http://localhost');
-} else {
-	define('WP_HOME','http://squash.jomi.com');
-	define('WP_SITEURL','http://squash.jomi.com');
-}
