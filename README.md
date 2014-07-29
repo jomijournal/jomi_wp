@@ -8,16 +8,16 @@ Installation
 ------------
 
 Requires
-* PHP (5.5.x)
-* Node.JS (>0.10.24) <http://nodejs.org/>
++ PHP (5.5.x)
++ Node.JS (>0.10.24) <http://nodejs.org/>
 
 Optional
-* nvm <https://github.com/creationix/nvm>
++ nvm <https://github.com/creationix/nvm>
 
 PHPBrew
 
 Seriously, consider using PHPBrew:
-* phpbrew <https://github.com/phpbrew/phpbrew>
++ phpbrew <https://github.com/phpbrew/phpbrew>
 
 OS X prereqs
 
