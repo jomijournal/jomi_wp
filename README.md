@@ -19,6 +19,20 @@ PHPBrew
 Seriously, consider using PHPBrew:
 * phpbrew <https://github.com/phpbrew/phpbrew>
 
+Windows prereqs
+- WAMP installation should take care of php req
+- Node.JS:
+-- installer <http://nodejs.org/download/>
+-- nodist <https://github.com/marcelklehr/nodist>
+--- to install:
+    $ cd [wherever_you_put_your_git_repos]
+    $ git clone git@github.com:marcelklehr/nodist.git
+    $ export PATH=$PATH:[absolute_path_to_nodist/bin]   # for example, export PATH=$PATH:"C:\Users\user\git\nodist\bin"
+                                                        # or, add it through this pc->properties->advanced settings->environment variables
+                                                        # when done, source .bashrc or restart bash
+    $ nodist 0.10 # install latest 0.10 version of node
+    $ nodist ls # check for success
+
 OS X prereqs
 
     $ brew install automake autoconf curl pcre re2c mhash libtool icu4c gettext jpeg libxml2 mcrypt gmp libevent
@@ -29,9 +43,32 @@ OS X prereqs
 
 Ubuntu/Debian prereqs
 
-
     $ sudo apt-get install php5
 
+Installation (Windows)
+
+    $ cd C:\wamp/
+    $ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
+    $ rm -r www # remove old www directory
+    $ mv jomi-wp www # move jomi-wp into new www directory
+    $ git checkout master # switch onto master branch if not already on it
+    $ git submodule init
+    $ git submodule update # initialize jomi-theme subrepository/submodule
+    $ cd wp-content/themes/jomi/
+    $ git checkout master
+    $ git pull --rebase # submodule update points the HEAD to a commit.
+                        # do this so HEAD points to origin/master for the latest and greatest
+    $ npm install -g grunt-cli  # install npm utilities
+                                # if this fails, verify your installation of node 
+                                # (make sure you have version>=0.10.24)
+    $ npm install -g bower 
+    $ npm install   # if this fails, verify node installation.
+                    # also, the contextify plugin needs Visual Studio Redist > 2012 
+                    # and Python >= 2.7 in order to build. this is another
+                    # common reason why npm install fails
+
+    $ bower install # front-end dependencies
+    $ grunt build
 
 Installation (OS X, Ubuntu/Debian)
 
