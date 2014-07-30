@@ -65,14 +65,14 @@ class MCB {
 			foreach( $blocks as $id => $block ) {
 
 				if( is_array( $block ) ) {
-					$name = $block['name'];
+					$label = $block['label'];
 					$type = $block['type'];
 				} else {
-					$name = $block;
+					$label = $block;
 					$type = 'editor';
 				}
 
-				echo '<p><strong>' . $name . '</strong></p>';
+				echo '<p><strong>' . $label . '</strong></p>';
 
 				if( 'one-liner' == $type )
 				  echo '<input type="text" name="' . $id . '" value="' . htmlentities( get_post_meta( $post->ID, '_mcb-' . $id, true ), null, 'UTF-8', false ) . '" />';
@@ -172,7 +172,7 @@ class MCB {
 		if( isset( $_REQUEST['doing_wp_cron'] ) )
 			return;
 			
-		if( $_REQUEST['post_view'] == 'list' )
+		if( isset( $_REQUEST['post_view'] ) && $_REQUEST['post_view'] == 'list' )
 		    return;
 
 		/**
@@ -183,7 +183,7 @@ class MCB {
 			$blocks = $this->get_blocks( $post_id, false );
 		
 		if( $blocks ) {
-			foreach( $blocks as $id => $name ) {
+			foreach( $blocks as $id => $args ) {
 				if( isset( $_POST[ $id ] ) )
 					update_post_meta( $post_id, '_mcb-' . $id, apply_filters( 'content_save_pre', $_POST[ $id ] ) );
 			}
@@ -223,8 +223,8 @@ class MCB {
 		if( 'publish' == $post->post_status && $type->public ) {
 			$request = wp_remote_get( get_permalink( $post_id ) );
 
-			if( is_wp_error( $request ) || 200 != $request['response']['code'] ) //HTTP Request failed: Tell the user to do this manually
-				return new WP_Error( 'mcb', sprintf( __( 'HTTP requests using <a href="http://codex.wordpress.org/Function_API/wp_remote_get" target="_blank">wp_remote_get</a> do not seem to work. This means the blocks cannot be initialized automatically. You can turn off HTTP requests altogether on the <a href="%1$s">options page</a> and manually update your blocks.', 'mcb' ), admin_url( 'options-general.php?page=mcb-settings' ) ) );
+			if( is_wp_error( $request ) || 200 != $request['response']['code'] ) //HTTP Request failed: Tell the user to do this manually					
+				return new WP_Error( 'mcb', sprintf( __( '<p>It doesn\'t look like we can automatically initialize the blocks. <a href="%1$s" target="_blank">Visit this page</a> in the front-end and then try again.</p><p>To turn off this option entirely, go to the <a href="%2$s">settings page</a> and disable HTTP Requests. You will still need to perform the steps above.</p>', 'mcb' ), get_permalink( $post_id ), admin_url( 'options-general.php?page=mcb-settings' ) ) );
 		}
 		
 		return true;

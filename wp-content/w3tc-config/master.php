@@ -164,10 +164,10 @@ return array(
 	'pgcache.prime.sitemap' => '',
 	'pgcache.prime.post.enabled' => false,
 	'minify.enabled' => false,
-	'minify.auto' => true,
+	'minify.auto' => false,
 	'minify.debug' => false,
 	'minify.engine' => 'file',
-	'minify.file.gc' => 86400,
+	'minify.file.gc' => 60,
 	'minify.file.nfs' => false,
 	'minify.file.locking' => false,
 	'minify.memcached.servers' => array(
@@ -179,7 +179,7 @@ return array(
 	),
 	'minify.symlinks' => array(
 	),
-	'minify.lifetime' => 86400,
+	'minify.lifetime' => 60,
 	'minify.upload' => true,
 	'minify.html.enable' => false,
 	'minify.html.engine' => 'html',
@@ -191,15 +191,15 @@ return array(
 		0 => 'google_ad_',
 		1 => 'RSPEAK_',
 	),
-	'minify.css.enable' => true,
+	'minify.css.enable' => false,
 	'minify.css.engine' => 'css',
 	'minify.css.combine' => false,
-	'minify.css.strip.comments' => false,
+	'minify.css.strip.comments' => true,
 	'minify.css.strip.crlf' => false,
 	'minify.css.imports' => '',
 	'minify.css.groups' => array(
 	),
-	'minify.js.enable' => true,
+	'minify.js.enable' => false,
 	'minify.js.engine' => 'js',
 	'minify.js.combine.header' => false,
 	'minify.js.header.embed_type' => 'blocking',
@@ -207,7 +207,7 @@ return array(
 	'minify.js.body.embed_type' => 'blocking',
 	'minify.js.combine.footer' => false,
 	'minify.js.footer.embed_type' => 'blocking',
-	'minify.js.strip.comments' => false,
+	'minify.js.strip.comments' => true,
 	'minify.js.strip.crlf' => false,
 	'minify.js.groups' => array(
 	),
@@ -244,12 +244,16 @@ return array(
 	'minify.htmltidy.options.wrap' => 0,
 	'minify.reject.logged' => false,
 	'minify.reject.ua' => array(
+		0 => '',
 	),
 	'minify.reject.uri' => array(
+		0 => '',
 	),
 	'minify.reject.files.js' => array(
+		0 => 'scripts.min.js',
 	),
 	'minify.reject.files.css' => array(
+		0 => 'main.min.css',
 	),
 	'minify.cache.files' => array(
 		0 => 'https://ajax.googleapis.com',
@@ -262,7 +266,7 @@ return array(
 	'cdn.includes.files' => '*.css;*.js;*.gif;*.png;*.jpg;*.xml',
 	'cdn.theme.enable' => true,
 	'cdn.theme.files' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf,*.woff,*.less',
-	'cdn.minify.enable' => true,
+	'cdn.minify.enable' => false,
 	'cdn.custom.enable' => true,
 	'cdn.custom.files' => array(
 		0 => 'favicon.ico',
@@ -325,6 +329,7 @@ return array(
 	),
 	'cdn.azure.ssl' => 'auto',
 	'cdn.mirror.domain' => array(
+		0 => 'cdn.jomi.com',
 	),
 	'cdn.mirror.ssl' => 'auto',
 	'cdn.netdna.alias' => '',
@@ -369,8 +374,10 @@ return array(
 	'cdn.reject.admins' => false,
 	'cdn.reject.logged_roles' => false,
 	'cdn.reject.roles' => array(
+		0 => '',
 	),
 	'cdn.reject.ua' => array(
+		0 => '',
 	),
 	'cdn.reject.uri' => array(
 	),
@@ -378,6 +385,8 @@ return array(
 		0 => '{uploads_dir}/wpcf7_captcha/*',
 		1 => '{uploads_dir}/imagerotator.swf',
 		2 => '{plugins_dir}/wp-fb-autoconnect/facebook-platform/channel.html',
+		3 => '{wp_content_dir}/themes/jomi/assets/css/main.min.css',
+		4 => '{wp_content_dir}/themes/jomi/assets/js/scripts.min.js',
 	),
 	'cdn.reject.ssl' => false,
 	'cdncache.enabled' => false,
@@ -421,7 +430,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => false,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '',
+	'browsercache.timestamp' => '1406674782',
 	'browsercache.replace.exceptions' => array(
 	),
 	'mobile.enabled' => false,
@@ -651,7 +660,7 @@ return array(
 	'timelimit.domain_rename' => 120,
 	'timelimit.minify_recommendations' => 600,
 	'minify.auto.filename_length' => 150,
-	'minify.auto.disable_filename_length_test' => false,
+	'minify.auto.disable_filename_length_test' => true,
 	'common.instance_id' => 1974127239,
 	'common.force_master' => true,
 	'newrelic.enabled' => false,

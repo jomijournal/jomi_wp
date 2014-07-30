@@ -33,12 +33,13 @@ function get_the_block( $name, $args = array() ) {
 		$post = mcb_get_post();
 
 		$defaults = array(
+			'label'         => '',
 			'type'          => 'editor',
-			'apply_filters' => true
+			'apply_filters' => true,
 		);
 		$args = wp_parse_args( $args, $defaults );
 		
-		mcb_register_block( $post->ID, $name, $args['type'] );
+		mcb_register_block( $post->ID, $name, $args['type'], $args['label'] );
 		
 		$meta = get_post_meta( $post->ID, '_mcb-' . sanitize_title( $name ), true );
 		
@@ -69,53 +70,28 @@ function has_block( $name, $args = array() ) {
  * Register a block if it does not exist already
  *
  * @param int $post_id
- * @param string $name The name of the block
- * @param string $type optional The name of the style, either 'editor' or 'one-liner' (defaults to 'editor')
+ * @param string $name The name of the block (unique ID)
+ * @param string $type Optional. The name of the style, either 'editor' or 'one-liner' (defaults to 'editor')
+ * @param string $label Optional. The label for the admin area.
  */
-function mcb_register_block( $post_id, $name, $type = 'editor' ) {
+function mcb_register_block( $post_id, $name, $type = 'editor', $label = '' ) {
 	if( 'blocks' == $name )
 		return;
 
-	if( ! mcb_block_exists( $post_id, $name, $type ) ) {
-		$blocks = get_post_meta( $post_id, '_mcb-blocks', true );
+	if( 0 == strlen( $label ) )
+		$label = $name;
 
-		if( ! is_array( $blocks ) )
-			$blocks = array();
-		
-		$blocks[ sanitize_title( $name ) ] = array(
-			'name' => $name, 
-			'type' => $type
-		);
-		
-		update_post_meta( $post_id, '_mcb-blocks', $blocks );
-	}
-}
-
-/**
- * Checks if a block already exists
- *
- * @param int $post_id
- * @param string $name The name of the block
- * @param string $type optional The name of the style, either 'editor' or 'one-liner' (defaults to 'editor')
- * @return bool
- */
-function mcb_block_exists( $post_id, $name, $type = 'editor' ) {
 	$blocks = get_post_meta( $post_id, '_mcb-blocks', true );
 
-	if( is_array( $blocks ) && in_array( sanitize_title( $name ), $blocks ) ) {
-		if( is_array( $blocks[ sanitize_title( $name ) ] ) ) {
-	  		$comparable_name = $blocks[ sanitize_title( $name ) ]['name'];
-			$comparable_type = $blocks[ sanitize_title( $name ) ]['type'];
-		} else {
-			$comparable_name = $blocks[ sanitize_title( $name ) ];
-			$comparable_type = 'editor';
-		}
-		
-		if( $comparable_name == $name && $comparable_type == $type )
-	    	return true;
-	}
+	if( ! is_array( $blocks ) )
+		$blocks = array();
 	
-	return false;
+	$blocks[ sanitize_title( $name ) ] = array(
+		'label' => $label,
+		'type'  => $type,
+	);
+	
+	update_post_meta( $post_id, '_mcb-blocks', $blocks );
 }
 
 /**

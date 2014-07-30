@@ -27,6 +27,7 @@ return array(
 	'notes.maxcdn_whitelist_ip' => true,
 	'notes.remove_w3tc' => false,
 	'notes.hide_extensions' => array(
+		0 => 'wordpress-seo',
 	),
-	'evaluation.reminder' => 0,
+	'evaluation.reminder' => 1407278751,
 );
