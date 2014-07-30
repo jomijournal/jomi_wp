@@ -48,11 +48,6 @@ Installation (OS X, Ubuntu/Debian)
     $ npm install -g grunt-cli
     $ npm install
     $ bower install # if this fails, ignore it
-    $ cp lib/scripts-template.php lib/scripts.php # if this fails, check if
-                                                  # lib/scripts.php exists.
-                                                  # If it does, ignore the
-                                                  # error.  Otherwise, contact
-                                                  # the authors
     $ npm install
     $ grunt build
     $ popd
