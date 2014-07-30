@@ -21,10 +21,14 @@ Seriously, consider using PHPBrew:
 
 Windows prereqs
 WAMP installation should take care of php req
+
 * Node.JS:
-    * installer <http://nodejs.org/download/>
-    * nodist <https://github.com/marcelklehr/nodist>
-    * to install:
+      * installer <http://nodejs.org/download/>
+      * nodist <https://github.com/marcelklehr/nodist>
+   * to install:
+
+
+
     $ cd [wherever_you_put_your_git_repos]
     $ git clone git@github.com:marcelklehr/nodist.git
     $ export PATH=$PATH:[absolute_path_to_nodist/bin]   # for example, export PATH=$PATH:"C:\Users\user\git\nodist\bin"
