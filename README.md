@@ -1,56 +1,75 @@
-JoMI UI Core
+JoMI WP
 =======
 
-JoMI Core User Interface
+JoMI WordPress Installation
 
 --------
 Installation
 ------------
+Requires:
 
-Requires
-* PHP (5.5.x)
-* Node.JS (>0.10.24) <http://nodejs.org/>
+   * PHP (5.5.x)
+   * Node.JS (>0.10.24) <http://nodejs.org/>
 
-Optional
+Optional:
+
 * nvm <https://github.com/creationix/nvm>
 
 PHPBrew
 
 Seriously, consider using PHPBrew:
+
 * phpbrew <https://github.com/phpbrew/phpbrew>
 
-Windows prereqs
-WAMP installation should take care of php req
+## Windows Prereqs ##
 
-* Node.JS:
-      * installer <http://nodejs.org/download/>
-      * nodist <https://github.com/marcelklehr/nodist>
-   * to install:
+WAMP:
+
+* Download WAMP installer <http://www.wampserver.com/en/> **32 BITS ONLY**
+      * follow installation instructions
+      * test by going to <http://localhost/> in your browser. should show a landing page.
+* apache server configuration
+      * go to /wamp/bin/apache/apache2.4.9/conf/
+      * replace httpd.conf with https://files.slack.com/files-pri/T02CD21SV-F02CJMYDH/httpd.conf
+      * this enables permalinks with WP
 
 
+Node.JS:
 
-    $ cd [wherever_you_put_your_git_repos]
+* installer <http://nodejs.org/download/>
+* nodist <https://github.com/marcelklehr/nodist>
+* to install:
+```
+#!bash
+$ cd [wherever_you_put_your_git_repos]
     $ git clone git@github.com:marcelklehr/nodist.git
     $ export PATH=$PATH:[absolute_path_to_nodist/bin]   # for example, export PATH=$PATH:"C:\Users\user\git\nodist\bin"
                                                         # or, add it through this pc->properties->advanced settings->environment variables
                                                         # when done, source .bashrc or restart bash
     $ nodist 0.10 # install latest 0.10 version of node
     $ nodist ls # check for success
+```
 
-OS X prereqs
+    
 
+## OS X prereqs ##
+```
+#!bash
     $ brew install automake autoconf curl pcre re2c mhash libtool icu4c gettext jpeg libxml2 mcrypt gmp libevent
     $ brew link icu4c # may give you a warning, ignore
     $ brew tap josegonzalez/php
     $ brew tap homebrew/dupes
     $ brew install php55 # you may want to run `brew options php55` to see some compile time options, but not necessary for this gig
+```
 
-Ubuntu/Debian prereqs
-
+## Ubuntu/Debian prereqs ##
+```
+#!bash
     $ sudo apt-get install php5
-
+```
 Installation (Windows)
-
+```
+#!bash
     $ cd C:\wamp/
     $ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
     $ rm -r www # remove old www directory
@@ -73,9 +92,10 @@ Installation (Windows)
 
     $ bower install # front-end dependencies
     $ grunt build
-
+```
 Installation (OS X, Ubuntu/Debian)
-
+```
+#!bash
     $ pushd <working path>
     $ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
     $ git checkout master
@@ -93,7 +113,7 @@ Installation (OS X, Ubuntu/Debian)
     $ grunt build
     $ popd
     $ php -S localhost:8080
-
+```
 
 Credits
 -------
