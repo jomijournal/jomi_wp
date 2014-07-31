@@ -14,7 +14,12 @@ Requires:
 
 Optional:
 
-* nvm <https://github.com/creationix/nvm>
+* [nvm](https://github.com/creationix/nvm) (node version manager)
+* [sublime text](http://www.sublimetext.com/3) (text editor)
+      * [wbond package manager](https://sublime.wbond.net/installation)
+      * DocBlockr
+      * LESS (LESS syntax highlighting)
+      * Emmet (code completion)
 
 PHPBrew
 
