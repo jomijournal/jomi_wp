@@ -1,4 +1,7 @@
 <?php
+/** Enable W3 Total Cache */
+define('WP_CACHE', true); // Added by W3 Total Cache
+
 /**
  * The base configurations of the WordPress.
  *
@@ -19,7 +22,7 @@
 // ONLY ENABLE THIS BLOCK IF YOU NEED TO MESS WITH SEARCHING + QUERIES
 // OTHERWISE THIS MAKES LOCALHOST CRAZY SLOW
 
-/*$whitelist = array(
+$whitelist = array(
   '127.0.0.1',
   '::1'
 );
@@ -30,15 +33,15 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
 } else {
 	define('WP_HOME','http://squash.jomi.com');
 	define('WP_SITEURL','http://squash.jomi.com');
-}*/
+}
 
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'jomi_7_17_2014');
+define('DB_NAME', 'jomi');
 
 /** MySQL database username */
-define('DB_USER', 'jomi_test');
+define('DB_USER', 'jomi');
 #define('DB_USER', 'root');
 
 /** MySQL database password */
