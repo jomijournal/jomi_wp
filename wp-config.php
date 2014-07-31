@@ -22,19 +22,9 @@ define('WP_CACHE', true); // Added by W3 Total Cache
 // ONLY ENABLE THIS BLOCK IF YOU NEED TO MESS WITH SEARCHING + QUERIES
 // OTHERWISE THIS MAKES LOCALHOST CRAZY SLOW
 
-$whitelist = array(
-  '127.0.0.1',
-  '::1'
-);
-// if localhost
-if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-	define('WP_HOME','http://localhost');
-	define('WP_SITEURL','http://localhost');
-} else {
-	define('WP_HOME','http://squash.jomi.com');
-	define('WP_SITEURL','http://squash.jomi.com');
-}
-
+$base_path = substr(ABSPATH, strlen($_SERVER['DOCUMENT_ROOT']));
+define('WP_SITEURL', "http://${_SERVER['HTTP_HOST']}${base_path}");
+define('WP_HOME',    "http://${_SERVER['HTTP_HOST']}${base_path}");
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
