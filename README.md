@@ -93,7 +93,7 @@ PHP:
 #!bash
 $ sudo apt-get install php5
 ```
-Installation (Windows)
+## Installation (Windows) ##
 ```
 #!bash
 $ cd C:\wamp/
@@ -119,7 +119,7 @@ $ npm install   # if this fails, verify node installation.
 $ bower install # front-end dependencies
 $ grunt build
 ```
-Installation (OS X, Ubuntu/Debian)
+## Installation (OS X, Ubuntu/Debian) ##
 ```
 #!bash
 $ pushd <working path>
