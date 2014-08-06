@@ -329,9 +329,9 @@ return array(
 	),
 	'cdn.azure.ssl' => 'auto',
 	'cdn.mirror.domain' => array(
-		0 => 'cdn.jomi.com',
+		0 => 'jomicom.a.cdnify.io',
 	),
-	'cdn.mirror.ssl' => 'auto',
+	'cdn.mirror.ssl' => 'enabled',
 	'cdn.netdna.alias' => '',
 	'cdn.netdna.consumerkey' => '',
 	'cdn.netdna.consumersecret' => '',
