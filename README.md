@@ -115,7 +115,8 @@ $ npm install   # if this fails, verify node installation.
                 # also, the contextify plugin needs Visual Studio Redist > 2012 
                 # and Python >= 2.7 in order to build. this is another
                 # common reason why npm install fails
-
+$ composer install
+$ composer update
 $ bower install # front-end dependencies
 $ grunt build
 ```
@@ -136,6 +137,8 @@ $ npm install -g grunt-cli
 $ npm install
 $ bower install # if this fails, ignore it
 $ npm install
+$ php composer.phar install
+$ php composer.phar update
 $ grunt build
 $ popd
 $ php -S localhost:8080
