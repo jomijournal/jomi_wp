@@ -43,6 +43,8 @@ WAMP:
       * go to /wamp/bin/apache/apache2.4.9/conf/
       * replace httpd.conf with https://files.slack.com/files-pri/T02CD21SV-F02CJMYDH/httpd.conf
       * this enables permalinks with WP
+* php configuration
+      * add C:\wamp\bin\php\php5.5.12 (or similar) to your system's path
 
 
 Node.JS:
@@ -115,8 +117,8 @@ $ npm install   # if this fails, verify node installation.
                 # also, the contextify plugin needs Visual Studio Redist > 2012 
                 # and Python >= 2.7 in order to build. this is another
                 # common reason why npm install fails
-$ composer install
-$ composer update
+$ php composer.phar install
+$ php composer.phar update
 $ bower install # front-end dependencies
 $ grunt build
 ```
