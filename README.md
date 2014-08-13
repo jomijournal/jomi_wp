@@ -119,6 +119,7 @@ $ npm install   # if this fails, verify node installation.
                 # common reason why npm install fails
 $ php composer.phar install
 $ php composer.phar update
+$ php composer.phar require geoip2/geoip2:~0.7.0
 $ bower install # front-end dependencies
 $ grunt build
 ```
@@ -141,6 +142,7 @@ $ bower install # if this fails, ignore it
 $ npm install
 $ php composer.phar install
 $ php composer.phar update
+$ php composer.phar require geoip2/geoip2:~0.7.0
 $ grunt build
 $ popd
 $ php -S localhost:8080
