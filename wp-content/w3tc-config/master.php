@@ -265,7 +265,7 @@ return array(
 	'cdn.includes.enable' => true,
 	'cdn.includes.files' => '*.css;*.js;*.gif;*.png;*.jpg;*.xml',
 	'cdn.theme.enable' => true,
-	'cdn.theme.files' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf,*.woff,*.less',
+	'cdn.theme.files' => '*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf,*.woff,*.less',
 	'cdn.minify.enable' => false,
 	'cdn.custom.enable' => true,
 	'cdn.custom.files' => array(
