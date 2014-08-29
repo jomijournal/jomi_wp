@@ -641,7 +641,7 @@ return array(
 	'notes.root_rules' => true,
 	'notes.rules' => true,
 	'notes.pgcache_rules_wpsc' => true,
-	'notes.support_us' => true,
+	'notes.support_us' => false,
 	'notes.no_curl' => true,
 	'notes.no_zlib' => true,
 	'notes.zlib_output_compression' => true,
