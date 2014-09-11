@@ -1,10 +1,10 @@
 === Register Plus Redux ===
-Contributors: radiok, skullbit
+Contributors: Dabelon, radiok, skullbit
 Donate link: http://radiok.info/donate/
 Tags: registration, register, plus, redux, password, invitation, code, email, verification, disclaimer, license, agreement, privacy, policy, logo, moderation, user
 Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 3.9.10
+Tested up to: 4.0
+Stable tag: 3.9.11
 
 Enhances the user registration process with complete customization and additional administration options.
 
@@ -117,6 +117,12 @@ HTML attributes should go in the following order name -> id -> class
 4. Unverified User Management
 
 == Changelog ==
+
+= 3.9.11 =
+September 11, 2014 by radiok
+
+* Fixed regression in Email Address as Username caused by changes in WordPress 4.0 to default modifiers (#22234, r28511)
+* Bumped the "Requires at least" minimum WordPress version to 3.5 following bug reported by taral <http://wordpress.org/support/topic/fatal-error-after-upgrading-to-3910>
 
 = 3.9.10 =
 May 14, 2013 by radiok

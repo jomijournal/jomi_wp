@@ -611,8 +611,16 @@ if ( !class_exists( 'RPR_Signup' ) ) {
 			if ( '1' === $register_plus_redux->rpr_get_option( 'username_is_email' ) ) {
 				global $wpdb;
 
-				if ( is_array( $result['errors']->errors ) && isset( $result['errors']->errors['user_name'] ) ) unset( $result['errors']->errors['user_name'] );
-				if ( is_array( $result['errors']->error_data ) && isset( $result['errors']->error_data['user_name'] ) ) unset( $result['errors']->error_data['user_name'] );
+				if ( is_array( $result['errors']->errors ) && isset( $result['errors']->errors['user_name'] ) ) {
+					$temp = $result['errors']->errors;
+					unset( $temp['user_name'] );
+					$result['errors']->errors = $temp;
+				}
+				if ( is_array( $result['errors']->error_data ) && isset( $result['errors']->error_data['user_name'] ) ) {
+					$temp = $result['errors']->error_data;
+					unset( $temp['user_name'] );
+					$result['errors']->error_data = $temp;
+				}
 
 				$result['user_name'] = $result['user_email'];
 				$result['orig_username'] = $result['user_email'];

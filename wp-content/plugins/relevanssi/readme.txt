@@ -4,7 +4,7 @@ Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 3.3.6
+Stable tag: 3.3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,12 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.3.7.1 =
+* Fixed bbPress compatibility.
+
+= 3.3.7 =
+* Fixed bbPress compatibility.
 
 = 3.3.6 =
 * Relevanssi handles taxonomy terms in search better. The change requires a reindexing.
@@ -1046,6 +1052,12 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.3.7.1 =
+* Improved bbPress compatibility.
+
+= 3.3.7 =
+* Fixed bbPress compatibility.
 
 = 3.3.6 =
 * Many new features, small bug fixes and WP 4.0 compatibility.
