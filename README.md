@@ -1,40 +1,34 @@
 JoMI WP
 =======
-
+-------------------------------
 JoMI WordPress Installation
+-------------------------------
+
+The site installation, in a nutshell, involves 4 basic steps:
+
+ * get and configure server stack (lamp, wemp, etc)
+ * get our repos (jomi_wp, jomi_theme)
+ * get third party libraries
+ * get the jomi database
 
 --------
-Installation
+Let's Get Started
 ------------
+
+## WINDOWS ##
+
 Requires:
 
- * PHP (5.5.x)
- * Node.JS (>0.10.24) <http://nodejs.org/>
- * Git SCM <http://git-scm.com/>  
+ * Git SCM download from <http://git-scm.com/> and follow install instructions
+     * #strongly# recommend you use git bash, the shell that comes with the git install. this README will be geared towards            linux-like shell commands
+ * WT-NMP (windows + (e)nginx + mysql + php5)
 
-Optional:
+     * download from <http://sourceforge.net/projects/wtnmp/> and follow install instructions
+     * don't create a "project" for jomi. somehow putting the site in its own directory will break (need to fix, but low priority). we will just dump jomi's files into the WWW folder later.
+     * copy the contents coreconf/wt-nmp (from this repo) into c:\wt-nmp\conf. 
+     * use the wt-nmp tool to kill/start all 3 processes. if any of them fail, check the error logs and diagnose.
 
-* [nvm](https://github.com/creationix/nvm) (node version manager)
-* [sublime text](http://www.sublimetext.com/3) (text editor)
-      * [wbond package manager](https://sublime.wbond.net/installation)
-      * DocBlockr
-      * LESS (LESS syntax highlighting)
-      * Emmet (code completion)
-
-PHPBrew
-
-Seriously, consider using PHPBrew:
-
-* phpbrew <https://github.com/phpbrew/phpbrew>
-
-## Windows Prereqs ##
-
-Git:
-
-* download from <http://git-scm.com/> and follow install instructions
-* **strongly** recommend you use git bash, the shell that comes with the git install. this README will be geared towards linux-like shell commands
-
-WAMP:
+~~ WAMP (windows + apache + mysql + php5) ~~ try using WT-NMP instead. it will make things easier in the long run:
 
 * Download WAMP installer <http://www.wampserver.com/en/> **32 BITS ONLY**
       * follow installation instructions
@@ -63,9 +57,27 @@ $ nodist 0.10 # install latest 0.10 version of node
 $ nodist ls # check for success
 ```
 
+
+Optional:
+
+* [sublime text](http://www.sublimetext.com/3) (text editor)
+      * [wbond package manager](https://sublime.wbond.net/installation)
+      * DocBlockr
+      * LESS (LESS syntax highlighting)
+      * Emmet (code completion)
+
+
     
 
 ## OS X prereqs ##
+
+PHPBrew
+
+Seriously, consider using PHPBrew:
+
+* phpbrew <https://github.com/phpbrew/phpbrew>
+
+ * [nvm](https://github.com/creationix/nvm) (node version manager) - this lets us get node
 ```
 #!bash
 $ brew install automake autoconf curl pcre re2c mhash libtool icu4c gettext jpeg libxml2 mcrypt gmp libevent
@@ -98,7 +110,7 @@ $ sudo apt-get install php5
 ## Installation (Windows) ##
 ```
 #!bash
-$ cd C:\wamp/
+$ cd C:\WT-NMP/ # OR "cd C:\wamp/" if using wamp
 $ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
 $ rm -r www # remove old www directory
 $ mv jomi-wp www # move jomi-wp into new www directory
