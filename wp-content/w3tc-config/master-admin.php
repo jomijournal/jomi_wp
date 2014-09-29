@@ -29,5 +29,5 @@ return array(
 	'notes.hide_extensions' => array(
 		0 => 'wordpress-seo',
 	),
-	'evaluation.reminder' => 1409929585,
+	'evaluation.reminder' => 1416929234,
 );

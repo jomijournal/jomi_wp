@@ -42,7 +42,7 @@ return array(
 		10 => '\\bfound_rows\\(\\)',
 		11 => '\\bw3tc_request_data\\b',
 	),
-	'objectcache.enabled' => false,
+	'objectcache.enabled' => true,
 	'objectcache.debug' => false,
 	'objectcache.engine' => 'file',
 	'objectcache.file.gc' => 3600,
@@ -100,8 +100,8 @@ return array(
 	'pgcache.cache.home' => true,
 	'pgcache.cache.feed' => false,
 	'pgcache.cache.nginx_handle_xml' => false,
-	'pgcache.cache.ssl' => false,
-	'pgcache.cache.404' => false,
+	'pgcache.cache.ssl' => true,
+	'pgcache.cache.404' => true,
 	'pgcache.cache.flush' => false,
 	'pgcache.cache.headers' => array(
 		0 => 'Last-Modified',
@@ -122,17 +122,22 @@ return array(
 		2 => 'wp-locations.php',
 	),
 	'pgcache.accept.qs' => array(
+		0 => '',
 	),
 	'pgcache.reject.front_page' => false,
 	'pgcache.reject.logged' => true,
-	'pgcache.reject.logged_roles' => false,
+	'pgcache.reject.logged_roles' => true,
 	'pgcache.reject.roles' => array(
+		0 => 'administrator',
+		1 => 'editor',
+		2 => 'author',
 	),
 	'pgcache.reject.uri' => array(
 		0 => 'wp-.*\\.php',
 		1 => 'index\\.php',
 	),
 	'pgcache.reject.ua' => array(
+		0 => '',
 	),
 	'pgcache.reject.cookie' => array(
 		0 => 'wptouch_switch_toggle',
@@ -152,10 +157,13 @@ return array(
 	'pgcache.purge.feed.author' => false,
 	'pgcache.purge.feed.terms' => false,
 	'pgcache.purge.feed.types' => array(
-		0 => 'rss2',
+		0 => 'rss',
+		1 => 'rss2',
+		2 => 'atom',
 	),
 	'pgcache.purge.postpages_limit' => 10,
 	'pgcache.purge.pages' => array(
+		0 => '',
 	),
 	'pgcache.purge.sitemap_regex' => '([a-z0-9_\\-]*?)sitemap([a-z0-9_\\-]*)?\\.xml',
 	'pgcache.prime.enabled' => false,
