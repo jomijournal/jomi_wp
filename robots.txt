@@ -2,6 +2,9 @@ User-agent: *
 Disallow: /wp-admin/
 Disallow: /wp-includes/
 Disallow: /phpmyadmin/
+Disallow: /dbninja/
+Disallow: /unit-test/
+Disallow: /coreconf/
 
 Sitemap: https://www.jomi.com/sitemap.xml
 Sitemap: http://app.wistia.com/sitemaps/47561.xml
