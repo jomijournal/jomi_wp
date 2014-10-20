@@ -31,16 +31,13 @@ define('WP_HOME',    "http://${_SERVER['HTTP_HOST']}${base_path}");
 define('DB_NAME', 'jomi');
 
 /** MySQL database username */
-define('DB_USER', 'jomi');
-#define('DB_USER', 'root');
+define('DB_USER', 'user');
 
 /** MySQL database password */
-#define('DB_PASSWORD', '');
-define('DB_PASSWORD', 'jomicat1234');
+define('DB_PASSWORD', 'pass');
 
 /** MySQL hostname */
-#define('DB_HOST', 'localhost');
-define('DB_HOST', 'jomi.com');
+define('DB_HOST', 'localhost');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
