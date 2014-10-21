@@ -4,6 +4,10 @@ echo updating refs...
 sudo apt-get update
 echo ...done!
 
+#echo INSTALLING APTITUDE...
+#sudo apt-get install aptitude
+#echo ...done!
+
 echo INSTALLING GIT...
 sudo apt-get install git
 echo ...done!
@@ -14,9 +18,10 @@ then
 	sudo apt-get install mysql-server php5-mysql
 	sudo mysql_install_db
 	#flip executable bit
-	sudo chmod +x mysql_secure.sh
+	#sudo chmod +x mysql_secure.sh
 	#run secure install
-	sudo mysql_secure.sh
+	#sudo mysql_secure.sh
+	sudo mysql_secure_installation
 else
 fi
 echo ...done!
