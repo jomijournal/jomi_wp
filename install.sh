@@ -67,6 +67,13 @@ echo LOADING PHP CONFIG...
 sudo cp coreconf/php5/fpm/php.ini /etc/php5/fpm/php.ini
 echo ...done!
 
+#restart services
+echo STARTING SERVICES...
+sudo service nginx restart
+sudo service mysql restart
+sudo service php5-fpm restart
+echo ...done!
+
 #clone jomi_theme
 echo CLONING JOMI_THEME
 cd /usr/share/nginx/html/wp-content/themes
