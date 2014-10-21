@@ -1,12 +1,10 @@
 #!/bin/bash
 
-echo updating refs...
-sudo apt-get update
-echo ...done!
+cd ~
 
-#echo INSTALLING APTITUDE...
-#sudo apt-get install aptitude
-#echo ...done!
+echo updating refs...
+#sudo apt-get update
+echo ...done!
 
 echo INSTALLING GIT...
 sudo apt-get install git
@@ -17,12 +15,9 @@ if [ $(dpkg-query -W -f='${Status}' mysql-server 2>/dev/null | grep -c "ok insta
 then
 	sudo apt-get install mysql-server php5-mysql
 	sudo mysql_install_db
-	#flip executable bit
-	#sudo chmod +x mysql_secure.sh
-	#run secure install
-	#sudo mysql_secure.sh
 	sudo mysql_secure_installation
 else
+	echo mysql already installed!
 fi
 echo ...done!
 
@@ -34,6 +29,7 @@ then
 	sudo apt-get update
 	sudo apt-get install nginx
 else
+	echo nginx already installed!
 fi
 echo ...done!
 
@@ -44,10 +40,9 @@ echo ...done!
 #clone jomi_wp
 
 echo CLONING JOMI_WP...
-cd /usr/share/nginx
-rm -r html
-git clone https://github.com/jomijournal/jomi_wp.git html
-cd html
+#sudo rm -f -r jomi_wp
+#git clone https://github.com/jomijournal/jomi_wp.git
+cd jomi_wp
 echo ...done!
 
 #load coreconf
@@ -90,29 +85,20 @@ echo ...done!
 
 #clone jomi_theme
 echo CLONING JOMI_THEME
-cd /usr/share/nginx/html/wp-content/themes
-git clone https://github.com/jomijournal/jomi_theme.git jomi
+#sudo rm -r -f jomi
+#git clone https://github.com/jomijournal/jomi_theme.git jomi
 cd jomi
 echo ...done!
 
 #node stuff
 
 echo INSTALLING NODEJS...
-#grab nvm and run install script
 curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
-#automatically source upon login
-echo "source ~/.nvm/nvm.sh" >> .bashrc
-source ~/.bashrc
-
+source ~/.nvm/nvm.sh
 nvm install 0.10
-
+nvm use 0.10
 echo ...done!
 
-
-#echo INSTALLING NPM...
-#sudo apt-get install npm
-#need to do failure detection here
-#echo ...done!
 
 #node dependencies
 
@@ -131,3 +117,14 @@ php composer.phar update
 
 grunt build
 
+#move to nginx folder
+sudo rm -r -f /usr/share/nginx/html
+cd ~
+sudo mv jomi_wp /usr/share/nginx/html
+
+export JWP=/usr/share/nginx/html
+export JTH=/usr/share/nginx/html/wp-content/themes/jomi
+source ~/.bashrc
+
+
+#NEED TO CREATE DATABASE AND IMPORT SQL FILE FROM JOMI.COM
