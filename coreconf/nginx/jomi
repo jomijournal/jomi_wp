@@ -17,26 +17,26 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 # Redirect ALL non-https traffic to https
-server {
-    server_name jomi.com *.jomi.com;
-    return 301 https://$server_name$request_uri;
-}
+#server {
+#    server_name jomi.com *.jomi.com;
+#    return 301 https://$server_name$request_uri;
+#}
 
 server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
+    #listen 443 ssl;
+    #listen [::]:443 ssl;
 
-    server_name jomi.com;
+    #server_name jomi.com;
 
-    ssl_certificate     /etc/nginx/ssl/jomi.com.crt;
-    ssl_certificate_key /etc/nginx/ssl/jomi.com.key;
+    #ssl_certificate     /etc/nginx/ssl/jomi.com.crt;
+    #ssl_certificate_key /etc/nginx/ssl/jomi.com.key;
 
     root /usr/share/nginx/html/;
     index index.php index.html index.htm;
 
     # Make site accessible from http://localhost/
-    server_name jomi.com;
-    client_max_body_size 50M;
+    server_name localhost;
+    client_max_body_size 100M;
     # location / {
         #        try_files $uri $uri/ /index.html;
         # }
