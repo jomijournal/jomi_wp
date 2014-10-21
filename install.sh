@@ -13,7 +13,7 @@ sudo apt-get install git
 echo ...done!
 
 echo INSTALLING MYSQL...
-if [ $(dpkg-query -W -f='${Status}' mysql-server 2>/dev/null | grep -c "ok mysql installed") -eq 0 ];
+if [ $(dpkg-query -W -f='${Status}' mysql-server 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
 	sudo apt-get install mysql-server php5-mysql
 	sudo mysql_install_db
@@ -27,14 +27,18 @@ fi
 echo ...done!
 
 echo INSTALLING NGINX...
-echo "deb http://ppa.launchpad.net/nginx/stable/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/nginx-stable.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
-sudo apt-get update
-sudo apt-get install nginx
+if [ $(dpkg-query -W -f='${Status}' nginx 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+	echo "deb http://ppa.launchpad.net/nginx/stable/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/nginx-stable.list
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
+	sudo apt-get update
+	sudo apt-get install nginx
+else
+fi
 echo ...done!
 
 echo INSTALLING PHP...
-sudo apt-get install php5 php5-fpm php5-cli php5-curl
+sudo apt-get install php5 php5-fpm php5-cli php5-curl php5-mysql
 echo ...done!
 
 #clone jomi_wp
@@ -65,6 +69,16 @@ echo ...done!
 #load php
 echo LOADING PHP CONFIG...
 sudo cp coreconf/php5/fpm/php.ini /etc/php5/fpm/php.ini
+echo ...done!
+
+#load wp-config.php
+echo LOADING WORDPRESS CONFIG...
+#echo Please enter your MySQL username (probably root)
+#read UNAME
+#echo Please enter your MySQL password
+#read PASS
+sudo cp coreconf/wordpress/wp-config.php wp-config.php
+echo users and passwords need to be entered manually fool
 echo ...done!
 
 #restart services
