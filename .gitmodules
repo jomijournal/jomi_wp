@@ -1,3 +1,3 @@
 [submodule "wp-content/themes/jomi"]
 	path = wp-content/themes/jomi
-	url = git@bitbucket.org:jomi_ci/jomi-theme.git
+	url = git@github.com:jomijournal/jomi_theme.git
