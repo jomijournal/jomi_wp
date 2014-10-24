@@ -19,6 +19,7 @@ define('WP_CACHE', true); // Added by W3 Total Cache
 
 /** local vs remote detection */
 
+
 $base_path = substr(ABSPATH, strlen($_SERVER['DOCUMENT_ROOT']));
 define('WP_SITEURL', "http://${_SERVER['HTTP_HOST']}${base_path}");
 define('WP_HOME',    "http://${_SERVER['HTTP_HOST']}${base_path}");
@@ -29,14 +30,11 @@ define('DB_NAME', 'jomi');
 
 /** MySQL database username */
 define('DB_USER', 'root');
-#define('DB_USER', 'jomi');
 
 /** MySQL database password */
-#define('DB_PASSWORD', 'jomicat1234');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'pass');
 
 /** MySQL hostname */
-#define('DB_HOST', 'localhost');
 define('DB_HOST', 'localhost');
 
 /** Database Charset to use in creating database tables. */
