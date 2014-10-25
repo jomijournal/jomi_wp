@@ -1,207 +1,155 @@
-JoMI WP
-=======
--------------------------------
-JoMI WordPress Installation
--------------------------------
+#! /bin/bash -x
 
-The site installation, in a nutshell, involves 4 basic steps:
+###Debian or Ubuntu only!
 
- * get and configure server stack (lamp, wemp, etc)
- * get our repos (jomi_wp, jomi_theme)
- * get third party libraries
- * get the jomi database
+#https://github.com/jomijournal/jomi_wp/raw/master/install.sh
 
---------
-Let's Get Started
-------------
+#is original. Here is my walkthrough.
+#Note: You must be logged into git and have an ssh key uploaded to the site in order to git clone through ssh. This should be done before running the script on new machines. Be sure to verify that your git is working by running ssh -T git@github.com before running this script.
 
-## WINDOWS ##
+####Basic Setup
+sudo apt-get update 
+sudo apt-get -y dist-upgrade
+sudo apt-get -y install git
+sudo apt-get -y install nginx
+sudo apt-get -y install php5-fpm php5-cli php5-curl
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+sudo apt-get -y install mysql-server php5-mysql
+sudo apt-get -y install curl
+sudo curl -sL https://deb.nodesource.com/setup | sudo bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y build-essential
+#npm should already be installed by the nodejs package and if you try to install separately through apt-get it will give an error that can be ignored.
 
-## STEP 1: GET AND CONFIGURE SERVER STACK ##
+####Repository Downloading
 
-Requires:
+cd /usr/share/nginx/html/
+sudo git clone https://github.com/jomijournal/jomi_wp.git
+cd jomi_wp/
 
- * Git SCM download from <http://git-scm.com/> and follow install instructions
-     * **strongly** recommend you use git bash, the shell that comes with the git install. this README will be geared towards            linux-like shell commands
- * WT-NMP (windows + (e)nginx + mysql + php5)
+####Config Files
+#note: the config files may still need some fine tuning after this.
+#e.g. you have to set root to be jomi_wp folder in nginx.conf
 
-     * download from <http://sourceforge.net/projects/wtnmp/> and follow install instructions
-     * don't create a "project" for jomi. somehow putting the site in its own directory will break (need to fix, but low priority). we will just dump jomi's files into the WWW folder later.
-     * copy the contents coreconf/wt-nmp (from this repo) into c:\wt-nmp\conf. 
-     * use the wt-nmp tool to kill/start all 3 processes. if any of them fail, check the error logs and diagnose.
-     * **IMPORTANT** go to localhost/adminer.php, go to privileges, and reset the root user's password. you may have to do this a few times, for each of the entries. YOU CAN'T DO THIS LATER, SO DO IT NOW
+#Nginx
+sudo cp ./coreconf/nginx/jomi /etc/nginx/sites-available/jomi
+sudo cp ./coreconf/nginx/default /etc/nginx/sites-available/default
+sudo ln -s /etc/nginx/sites-available/jomi /etc/nginx/sites-enabled/jomi
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-availabel/default /etc/nginx/sites-enabled/default
 
- * ~~WAMP (windows + apache + mysql + php5)~~ try using WT-NMP instead. it will make things easier in the long run:
+#Mysql
+#not necessary to copy config for dev installations
 
-    * Download WAMP installer <http://www.wampserver.com/en/> **32 BITS ONLY**
-        * follow installation instructions
-        * test by going to <http://localhost/> in your browser. should show a landing page.
-    * apache server configuration
-        * go to /wamp/bin/apache/apache2.4.9/conf/
-        * replace httpd.conf with https://files.slack.com/files-pri/T02CD21SV-F02CJMYDH/httpd.conf
-        * this enables permalinks with WP
-    * php configuration
-        * add C:\wamp\bin\php\php5.5.12 (or similar) to your system's path
+#PHP
+#Differences are small. use this to see differences:
+#diff /usr/share/nginx/html/jomi_wp/php5/fpm/php.ini /etc/php5/fpm/php.ini
+sudo cp ./coreconf/php5/fpm/php.ini /etc/php5/fpm/php.ini
 
- * Node.JS:
+#Wordpress
+sudo cp ./coreconf/wordpress/wp-config.php ./wp-config.php
+sudo sed -i "s/'pass'/'root'/" ./wp-config.php
 
-    * installer <http://nodejs.org/download/>
-    * nodist <https://github.com/marcelklehr/nodist>
-    * to install:
-```
-#!bash
-$ cd [wherever_you_put_your_git_repos]
-$ git clone git@github.com:marcelklehr/nodist.git
-$ export PATH=$PATH:[absolute_path_to_nodist/bin]   # for example, export PATH=$PATH:"C:\Users\user\git\nodist\bin"
-                                                    # or, add it through this pc->properties->advanced settings->environment variables
-                                                    # when done, source .bashrc or restart bash
-$ nodist 0.10 # install latest 0.10 version of node
-$ nodist ls # check for success
-```
+#Restart
+sudo service nginx restart
+sudo service mysql restart
+sudo service php5-fpm restart
+
+echo time to go manual for the rest of the instructions...
 
 
-Optional:
 
-* [sublime text](http://www.sublimetext.com/3) (text editor)
-      * [wbond package manager](https://sublime.wbond.net/installation)
-      * DocBlockr
-      * LESS (LESS syntax highlighting)
-      * Emmet (code completion)
+#At this point, you need to git the submodule manually as a submodule
+#Then finish with npm and bower and bootstrap before ending with imported the sql database.
 
-to confirm that you are on track, head on over to http://localhost when all 3 of your services are up. you should see a landing page (or any page, whatever.) if you're not getting anything, don't move on, look back and debug
+#Because these dependancies change from time to time, it cant be expected to make a reliable bash script for all but the most stable programs.
 
-## STEP 2: GET OUR REPOS ##
-```
-#!bash
-$ cd C:\WT-NMP/ # OR "cd C:\wamp/" if using wamp
-$ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
-$ rm -r www # remove old www directory
-$ mv jomi-wp www # move jomi-wp into new www directory
-$ git checkout master # switch onto master branch if not already on it
-$ git submodule init
-$ git submodule update # initialize jomi-theme subrepository/submodule
-$ cd wp-content/themes/jomi/
-$ git checkout master
-$ git pull --rebase # submodule update points the HEAD to a commit.
-                    # do this so HEAD points to origin/master for the latest and greatest
-```
-## STEP 3: GET THIRD PARTY LIBRARIES ##
-```
-#!bash
-$ cd C:\WT-NMP\www\wp-content\themes\jomi #adjust accordingly for wamp installation
-$ npm install -g grunt-cli  # install npm utilities
-                            # if this fails, verify your installation of node 
-                            # (make sure you have version>=0.10.24)
-$ npm install -g bower 
-$ npm install   # if this fails, verify node installation.
-                # also, the contextify plugin needs Visual Studio Redist > 2012 
-                # and Python >= 2.7 in order to build. this is another
-                # common reason why npm install fails
-$ php composer.phar install
-$ php composer.phar update
-$ php composer.phar require geoip2/geoip2:~0.7.0
-$ bower install # front-end dependencies
-$ grunt build
-```
+##### SUBMODULE
 
-## STEP 4: GET JOMI DATABASE ##
+ 
+# 184  git submodule sync
+#185  git submodule init
+# 186  git submodule --list
+# 187  git config --list |egrep ^submodule
+# 188  git submodule update
 
-You need a copy of the JoMI database. If you are not part of JoMI, tough luck. If you are:
 
- * copies of the database can be found in the google drive folder, under 50 IT/jomicom/backups/[year]/[month]. unzip the tarball, and take only jomi.sql. the other tables are not needed
- * you can also sftp/wget into jomi.com. backups should be found in /root/backups. when you get it, unzip and get jomi.sql
 
-Configure your local MySQL installation. 
 
- * For WT-NMP, you should have already configured your root account. go to localhost/phpmyadmin, and log in
- * For WAMP, the creds should just be user:"root" pass:"". change this later, if you want
- * create a database called "jomi" with collation "utf8_bin"
- * import the jomi.sql into that table (this takes a long time and is hard to see progress. just be patient)
-    * you might have to split up the sql or do this table by table, depending on how big the file is. use your judgement
- * then:
+#"Don’t forget to checkout the branch inside the submodule (remember? submodules have a detached HEAD):"
+#$ cd lib/supercoolib (example)(in jomi's case this would be the theme/jomi folder under wp-content)
+# so make sure you are in the jomi theme folder for below steps
+#$ git checkout master
+# 191  git pull -u origin master
 
-```
-#!bash
-$ cd c:\WT-NMP\www
-$ cp coreconf/wordpress/wp-config.php wp-config.php
-```
 
- * edit wp-config.php, and enter in the database credentials that you have created
- * the website should have access to the database now.
 
-## DONE! ##
 
-Go to http://localhost/. Site should be (nearly) fully functional. Fun times ahead.
+####NPM
+ #193  sudo npm install -g bower
+ #194  sudo npm install -g grunt-cli
+ ##### needs sudo err 195  npm install
+ #196  sudo npm install
+ # 198  bower install
+ #be sure to npm install after bower.
+ # 199  sudo npm install
+ # npm install
+ #sudo npm install --unsafe-perm
+ #sudo bower install --allow-root
+ #npm install
+ #sudo grunt build
+ # 200  php composer.phar install
+ # 201  sudo apt-get install php5-curl
+ # 202  php composer.phar install
+ # 203  php composer.phar update
+ # 204  php composer.phar require geoip2/geoip2:~0.7.0
+ #  205  grunt build
 
-## OS X INSTALLATION ##
-**INSTRUCTIONS UNDER CONSTRUCTION**
 
-PHPBrew
+###Permissions  todo
 
-Seriously, consider using PHPBrew:
+#note: need to change settings in nginx.conf to specify jomi sites-available
+# need to change settings in jomi in sites available to specify to listen to port 80 and server_name is localhost
 
-* phpbrew <https://github.com/phpbrew/phpbrew>
+##Mysql
+#mysql -u root -p  < jomi.sql
 
- * [nvm](https://github.com/creationix/nvm) (node version manager) - this lets us get node
-```
-#!bash
-$ brew install automake autoconf curl pcre re2c mhash libtool icu4c gettext jpeg libxml2 mcrypt gmp libevent
-$ brew link icu4c # may give you a warning, ignore
-$ brew tap josegonzalez/php
-$ brew tap homebrew/dupes
-$ brew install php55 # you may want to run `brew options php55` to see some compile time options, but not necessary for this gig
-```
 
-## LINUX/UBUNTU INSTALL ##
 
-Git:
-```
-#!bash
-$ sudo apt-get install git
-```
 
-Node:
-```
-#!bash
-$ sudo apt-get install nodejs
-$ sudo apt-get install npm
-```
+#todo:
+#name changes so its difficult, as well we have to specify the path where the sql file is, which is also difficult unless you download it somewhere and rename it beforehand...
 
-PHP:
-```
-#!bash
-$ sudo apt-get install php5
-```
+#need to change mysql password after the installation so it isn't under root or called root.
 
-## Installation (OS X, Ubuntu/Debian) ##
-```
-#!bash
-$ pushd <working path>
-$ git clone git@bitbucket.org:jomi_ci/jomi-wp.git
-$ git checkout master
-$ git submodule init
-$ git submodule update # if this fails, check if 
-                       # <working path>/jomi-wp/wp-content/themes/jomi
-                       # is empty
-$ pushd wp-content/themes/jomi
-$ git pull -u origin master
-$ npm install -g bower
-$ npm install -g grunt-cli
-$ npm install
-$ bower install # if this fails, ignore it
-$ npm install
-$ php composer.phar install
-$ php composer.phar update
-$ php composer.phar require geoip2/geoip2:~0.7.0
-$ grunt build
-$ popd
-$ php -S localhost:8080
-```
+# need to set proper permissions on directories.
 
-Credits
--------
 
-Copyright (c) 2014 Journal of Medical Insight.
-All rights reserved.
 
-NOT FOR REDISTRIBUTION
+
+
+
+
+
+
+
+
+
+
+### Possible Errors
+# q.The home page works, but other pages are 404!
+# a.you have to set the root to be the folder where jomi_wp is. or just move all jomi_wp into the root (I prefer the former as it doesn't mess with directory settings).
+
+
+# q.The homepage is white, and all messed up,  but some text appears!
+# a. the installation of npm / bower / submodules didn't go through right. make sure you install the submodule correctly as a submodule, and make sure you install npm, grunt, bower, and they all go through without errors.
+
+
+
+# q. Database connection error!
+# a. make sure the sql database is imported and the wp-config points to a working mysql password. debug by running as the user for mysql in command line that wpress will use manually. If necessary, make a new user and reset password.
+
+
+
+#the above script will work. it has been tested although some steps must be manual. Maybe if I find more motivation I will write it correctly.
