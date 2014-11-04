@@ -4,5 +4,6 @@ index.html
 wp-content/uploads
 wp-content/cache
 /wp-config.php
-#grassroots
-grassroots
+
+
+nginx.conf
