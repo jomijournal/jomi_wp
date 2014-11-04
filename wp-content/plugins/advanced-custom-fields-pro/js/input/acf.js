@@ -348,13 +348,9 @@ var acf;
 			
 			// filter out fields
 			if( !all ) {
-			
-				$fields = $fields.filter(function(){
-					
-					return acf.apply_filters('is_field_ready_for_js', true, $(this));			
-
-				});
 				
+				$fields = acf.apply_filters('get_fields', $fields);
+								
 			}
 			
 			
@@ -1292,6 +1288,40 @@ var acf;
 		
 		    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 					
+		},
+		
+		
+		/*
+		*  val
+		*
+		*  This function will update an elements value and trigger the change event if differene
+		*
+		*  @type	function
+		*  @date	16/10/2014
+		*  @since	5.0.9
+		*
+		*  @param	$el (jQuery)
+		*  @param	val (mixed)
+		*  @return	n/a
+		*/
+		
+		val: function( $el, val ){
+			
+			// vars
+			var orig = $el.val();
+			
+			
+			// update value
+			$el.val( val );
+			
+			
+			// trigger change
+			if( val != orig ) {
+				
+				$el.trigger('change');
+				
+			}
+			
 		}
 		
 	};
@@ -1742,15 +1772,26 @@ frame.on('all', function( e ) {
 		onReady: function(){
 			
 			// vars
-			var major = acf.get('wp_version');
+			var version = acf.get('wp_version');
 			
 			
-			// add class
-			if( major ) {
+			// bail early if no version
+			if( !version ) {
 				
-				$('body').addClass('acf-wp-' + major.substr(0,1));
+				return;
 				
 			}
+			
+			
+			// use only major version
+			if( typeof version == 'string' ) {
+				
+				version = version.substr(0,1);
+				
+			}
+			
+			
+			$('body').addClass('acf-wp-' + version);
 			
 		},
 		

@@ -5,10 +5,16 @@
 		type: 'image',
 		$el: null,
 		
+		actions: {
+			'ready':	'initialize',
+			'append':	'initialize'
+		},
+		
 		events: {
 			'click [data-name="add"]': 		'add',
 			'click [data-name="edit"]': 	'edit',
 			'click [data-name="remove"]':	'remove',
+			'change input[type="file"]':	'change'
 		},
 		
 		focus: function(){
@@ -17,6 +23,17 @@
 			
 			this.settings = acf.get_data( this.$el );
 			
+		},
+		
+		initialize: function(){
+			
+			// add attribute to form
+			if( this.$el.hasClass('basic') ) {
+				
+				this.$el.closest('form').attr('enctype', 'multipart/form-data');
+				
+			}
+				
 		},
 		
 		add: function() {
@@ -51,7 +68,7 @@
 							
 						
 						// find next image field
-						$tr.nextAll('.acf-row').not('.clone').each(function(){
+						$tr.nextAll('.acf-row:visible').each(function(){
 							
 							// get next $field
 							$next = acf.get_field( field_key, $(this) );
@@ -107,7 +124,7 @@
 					
 					
 			    	// add file to field
-			        self.render( attachment );
+			        self.render( self.prepare(attachment) );
 					
 				}
 			});
@@ -115,19 +132,34 @@
 			
 		},
 		
-		render: function( attachment ){
+		prepare: function( attachment ) {
+		
+			// vars
+			var image = {
+		    	id:		attachment.id,
+		    	url:	attachment.attributes.url
+	    	};			
 			
-			// override url
-			if( acf.isset(attachment, 'attributes', 'sizes', this.settings.preview_size, 'url') ) {
+			
+			// check for preview size
+			if( acf.isset(attachment.attributes, 'sizes', this.settings.preview_size, 'url') ) {
 	    	
-		    	attachment.url = attachment.attributes.sizes[ this.settings.preview_size ].url;
+		    	image.url = attachment.attributes.sizes[ this.settings.preview_size ].url;
 		    	
 	    	}
 	    	
 	    	
+	    	// return
+	    	return image;
+			
+		},
+		
+		render: function( image ){
+			
+	    	
 			// set atts
-		 	this.$el.find('[data-name="image"]').attr( 'src', attachment.url );
-			this.$el.find('[data-name="id"]').val( attachment.id ).trigger('change');
+		 	this.$el.find('[data-name="image"]').attr( 'src', image.url );
+			this.$el.find('[data-name="id"]').val( image.id ).trigger('change');
 			
 			
 			// set div class
@@ -155,8 +187,7 @@
 				
 				select:	function( attachment, i ) {
 				
-			    	// add file to field
-			        self.render( attachment );
+			    	self.render( self.prepare(attachment) );
 					
 				}
 				
@@ -179,6 +210,12 @@
 	        
 			// remove class
 			this.$el.removeClass('has-value');
+			
+		},
+		
+		change: function( e ){
+			
+			this.$el.find('[data-name="id"]').val( e.$el.val() );
 			
 		}
 		

@@ -696,11 +696,6 @@ ul.acf-checkbox-list li label {
 	padding: 0;
 }
 
-.acf-image-uploader .hide-if-value p {
-	display: block;
-	margin: 0 !important;
-}
-
 .acf-image-uploader input.button {
 	width: auto;
 }
@@ -744,6 +739,7 @@ ul.acf-checkbox-list li label {
 	border: #DFDFDF solid 1px;
 	min-height: 84px;
 	position: relative;
+	background: #fff;
 }
 
 .acf-file-uploader .file-icon {
@@ -776,11 +772,6 @@ ul.acf-checkbox-list li label {
 
 .acf-file-uploader .file-info a {
 	text-decoration: none;
-}
-
-.acf-file-uploader .hide-if-value p {
-	display: block;
-	margin: 0 !important;
 }
 
 

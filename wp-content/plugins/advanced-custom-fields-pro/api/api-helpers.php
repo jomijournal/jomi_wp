@@ -1153,15 +1153,18 @@ function acf_get_admin_notices()
 
 function acf_get_image_sizes() {
 	
+	// global
+	global $_wp_additional_image_sizes;
+	
+	
 	// vars
 	$sizes = array(
 		'thumbnail'	=>	__("Thumbnail",'acf'),
 		'medium'	=>	__("Medium",'acf'),
-		'large'		=>	__("Large",'acf'),
-		'full'		=>	__("Full Size",'acf')
+		'large'		=>	__("Large",'acf')
 	);
-
-
+	
+	
 	// find all sizes
 	$all_sizes = get_intermediate_image_sizes();
 	
@@ -1189,9 +1192,28 @@ function acf_get_image_sizes() {
 	}
 	
 	
+	// add sizes
+	foreach( array_keys($sizes) as $s ) {
+		
+		// vars
+		$w = isset($_wp_additional_image_sizes[$s]['width']) ? $_wp_additional_image_sizes[$s]['width'] : get_option( "{$s}_size_w" );
+		$h = isset($_wp_additional_image_sizes[$s]['height']) ? $_wp_additional_image_sizes[$s]['height'] : get_option( "{$s}_size_h" );
+		
+		if( $w && $h ) {
+			
+			$sizes[ $s ] .= " ({$w} x {$h})";
+			
+		}
+		
+	}
+	
+	
+	// add full end
+	$sizes['full'] = __("Full Size",'acf');
+	
 	
 	// filter for 3rd party customization
-	$sizes = apply_filters( 'image_size_names_choose', $sizes );
+	$sizes = apply_filters( 'acf/get_image_sizes', $sizes );
 	
 	
 	// return
@@ -2456,6 +2478,302 @@ function acf_in_array( $value, $array ) {
 	// find value in array
 	return in_array($value, $array);
 	
+}
+
+
+/*
+*  acf_get_valid_post_id
+*
+*  This function will return a valid post_id based on the current screen / parameter
+*
+*  @type	function
+*  @date	8/12/2013
+*  @since	5.0.0
+*
+*  @param	$post_id (mixed)
+*  @return	$post_id (mixed)
+*/
+
+function acf_get_valid_post_id( $post_id = 0 ) {
+	
+	// set post_id to global
+	if( !$post_id ) {
+	
+		$post_id = (int) get_the_ID();
+		
+	}
+	
+	
+	// allow for option == options
+	if( $post_id == 'option' ) {
+	
+		$post_id = 'options';
+		
+	}
+	
+	
+	// $post_id may be an object
+	if( is_object($post_id) ) {
+		
+		if( isset($post_id->roles, $post_id->ID) ) {
+		
+			$post_id = 'user_' . $post_id->ID;
+			
+		} elseif( isset($post_id->taxonomy, $post_id->term_id) ) {
+		
+			$post_id = $post_id->taxonomy . '_' . $post_id->term_id;
+			
+		} elseif( isset($post_id->comment_ID) ) {
+		
+			$post_id = 'comment_' . $post_id->comment_ID;
+			
+		} elseif( isset($post_id->ID) ) {
+		
+			$post_id = $post_id->ID;
+			
+		}
+		
+	}
+	
+	
+	// append language code
+	if( $post_id == 'options' ) {
+		
+		$dl = acf_get_setting('default_language');
+		$cl = acf_get_setting('current_language');
+		
+		if( $cl && $cl !== $dl ) {
+			
+			$post_id .= '_' . $cl;
+			
+		}
+		
+	}
+	
+	
+	/*
+	*  Override for preview
+	*  
+	*  If the $_GET['preview_id'] is set, then the user wants to see the preview data.
+	*  There is also the case of previewing a page with post_id = 1, but using get_field
+	*  to load data from another post_id.
+	*  In this case, we need to make sure that the autosave revision is actually related
+	*  to the $post_id variable. If they match, then the autosave data will be used, otherwise, 
+	*  the user wants to load data from a completely different post_id
+	*/
+	
+	if( isset($_GET['preview_id']) ) {
+	
+		$autosave = wp_get_post_autosave( $_GET['preview_id'] );
+		
+		if( $autosave->post_parent == $post_id ) {
+		
+			$post_id = (int) $autosave->ID;
+			
+		}
+		
+	}
+	
+	
+	// return
+	return $post_id;
+	
+}
+
+
+/*
+*  acf_upload_files
+*
+*  This function will walk througfh the $_FILES data and upload each found
+*
+*  @type	function
+*  @date	25/10/2014
+*  @since	5.0.9
+*
+*  @param	$ancestors (array) an internal parameter, not required
+*  @return	n/a
+*/
+	
+function acf_upload_files( $ancestors = array() ) {
+	
+	// vars
+	$file = array(
+		'name'		=> '',
+		'type'		=> '',
+		'tmp_name'	=> '',
+		'error'		=> '',
+		'size' 		=> ''
+	);
+	
+	
+	// populate with $_FILES data
+	foreach( array_keys($file) as $k ) {
+		
+		$file[ $k ] = $_FILES['acf'][ $k ];
+		
+	}
+	
+	
+	// walk through ancestors
+	if( !empty($ancestors) ) {
+		
+		foreach( $ancestors as $a ) {
+			
+			foreach( array_keys($file) as $k ) {
+				
+				$file[ $k ] = $file[ $k ][ $a ];
+				
+			}
+			
+		}
+		
+	}
+	
+	
+	// is array?
+	if( is_array($file['name']) ) {
+		
+		foreach( array_keys($file['name']) as $k ) {
+				
+			$_ancestors = array_merge($ancestors, array($k));
+			
+			acf_upload_files( $_ancestors );
+			
+		}
+		
+		return;
+		
+	}
+	
+	
+	// bail ealry if file has error (no file uploaded)
+	if( $file['error'] ) {
+		
+		return;
+		
+	}
+	
+	
+	// file found!
+	$attachment_id = acf_upload_file( $file );
+	
+	
+	// update $_POST
+	array_unshift($ancestors, 'acf');
+	acf_update_nested_array( $_POST, $ancestors, $attachment_id );
+	
+}
+
+
+/*
+*  acf_upload_file
+*
+*  This function will uploade a $_FILE
+*
+*  @type	function
+*  @date	27/10/2014
+*  @since	5.0.9
+*
+*  @param	$uploaded_file (array) array found from $_FILE data
+*  @return	$id (int) new attachment ID
+*/
+
+function acf_upload_file( $uploaded_file ) {
+	
+	// required
+	require_once( ABSPATH . "/wp-load.php" );
+	require_once( ABSPATH . "/wp-admin/includes/file.php" );
+	require_once( ABSPATH . "/wp-admin/includes/image.php" );
+	 
+	 
+	// required for wp_handle_upload() to upload the file
+	$upload_overrides = array( 'test_form' => FALSE );
+	
+	
+	// upload
+	$file = wp_handle_upload( $uploaded_file, $upload_overrides );
+	
+	
+	// bail ealry if upload failed
+	if( isset($file['error']) ) {
+		
+		return $file['error'];
+		
+	}
+	
+	
+	// vars
+	$url = $file['url'];
+	$type = $file['type'];
+	$file = $file['file'];
+	$filename = basename($file);
+	
+
+	// Construct the object array
+	$object = array(
+		'post_title' => $filename,
+		'post_mime_type' => $type,
+		'guid' => $url,
+		'context' => 'acf-upload'
+	);
+
+	// Save the data
+	$id = wp_insert_attachment($object, $file);
+
+	// Add the meta-data
+	wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $file ) );
+	
+	/** This action is documented in wp-admin/custom-header.php */
+	do_action( 'wp_create_file_in_uploads', $file, $id ); // For replication
+	
+	// return new ID
+	return $id;
+	
+}
+
+
+/*
+*  acf_update_nested_array
+*
+*  This function will update a nested array value. Useful for modifying the $_POST array
+*
+*  @type	function
+*  @date	27/10/2014
+*  @since	5.0.9
+*
+*  @param	$array (array) target array to be updated
+*  @param	$ancestors (array) array of keys to navigate through to find the child
+*  @param	$value (mixed) The new value
+*  @return	(boolean)
+*/
+
+function acf_update_nested_array( &$array, $ancestors, $value ) {
+	
+	// if no more ancestors, update the current var
+	if( empty($ancestors) ) {
+		
+		$array = $value;
+		
+		// return
+		return true;
+		
+	}
+	
+	
+	// shift the next ancestor from the array
+	$k = array_shift( $ancestors );
+	
+	
+	// if exists
+	if( isset($array[ $k ]) ) {
+		
+		return acf_update_nested_array( $array[ $k ], $ancestors, $value );
+		
+	}
+		
+	
+	// return 
+	return false;
 }
 
 

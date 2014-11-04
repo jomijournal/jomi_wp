@@ -31,7 +31,7 @@ function acf_is_field_key( $field_key = '' ) {
 	}
 	
 	
-	// allow local field key to not start with '_field'
+	// allow local field key to not start with 'field_'
 	if( acf_is_local_field($field_key) ) {
 		
 		return true;
@@ -1387,14 +1387,24 @@ function acf_get_sub_field( $selector, $field ) {
 			
 		}
 		// if
-		
+	
 	} elseif( $field['type'] == 'flexible_content' ) {
 		
+		// vars
 		$layouts = acf_extract_var( $field, 'layouts');
+		$current = get_row_layout();
+		
 		
 		if( !empty($layouts) ) {
 			
 			foreach( $layouts as $layout ) {
+				
+				// skip layout if the current layout key does not match
+				if( $current && $current !== $layout['name'] ) {
+					
+					continue;
+					
+				} 
 				
 				// extract sub fields
 				$sub_fields = acf_extract_var( $layout, 'sub_fields');

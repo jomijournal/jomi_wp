@@ -1,9 +1,5 @@
 
 
-/* **********************************************
-     Begin event-manager.js
-********************************************** */
-
 ( function( window, undefined ) {
 	"use strict";
 
@@ -250,10 +246,6 @@
 
 } )( window );
 
-
-/* **********************************************
-     Begin acf.js
-********************************************** */
 
 var acf;
 
@@ -605,13 +597,9 @@ var acf;
 			
 			// filter out fields
 			if( !all ) {
-			
-				$fields = $fields.filter(function(){
-					
-					return acf.apply_filters('is_field_ready_for_js', true, $(this));			
-
-				});
 				
+				$fields = acf.apply_filters('get_fields', $fields);
+								
 			}
 			
 			
@@ -1549,6 +1537,40 @@ var acf;
 		
 		    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 					
+		},
+		
+		
+		/*
+		*  val
+		*
+		*  This function will update an elements value and trigger the change event if differene
+		*
+		*  @type	function
+		*  @date	16/10/2014
+		*  @since	5.0.9
+		*
+		*  @param	$el (jQuery)
+		*  @param	val (mixed)
+		*  @return	n/a
+		*/
+		
+		val: function( $el, val ){
+			
+			// vars
+			var orig = $el.val();
+			
+			
+			// update value
+			$el.val( val );
+			
+			
+			// trigger change
+			if( val != orig ) {
+				
+				$el.trigger('change');
+				
+			}
+			
 		}
 		
 	};
@@ -1999,15 +2021,26 @@ frame.on('all', function( e ) {
 		onReady: function(){
 			
 			// vars
-			var major = acf.get('wp_version');
+			var version = acf.get('wp_version');
 			
 			
-			// add class
-			if( major ) {
+			// bail early if no version
+			if( !version ) {
 				
-				$('body').addClass('acf-wp-' + major.substr(0,1));
+				return;
 				
 			}
+			
+			
+			// use only major version
+			if( typeof version == 'string' ) {
+				
+				version = version.substr(0,1);
+				
+			}
+			
+			
+			$('body').addClass('acf-wp-' + version);
 			
 		},
 		
@@ -3047,10 +3080,6 @@ frame.on('all', function( e ) {
 	
 })(jQuery);
 
-/* **********************************************
-     Begin ajax.js
-********************************************** */
-
 (function($){
 	
 	acf.ajax = acf.model.extend({
@@ -3368,10 +3397,6 @@ frame.on('all', function( e ) {
 	
 })(jQuery);
 
-/* **********************************************
-     Begin color-picker.js
-********************************************** */
-
 (function($){
 	
 	acf.fields.color_picker = acf.field.extend({
@@ -3441,10 +3466,6 @@ frame.on('all', function( e ) {
 	
 
 })(jQuery);
-
-/* **********************************************
-     Begin date-picker.js
-********************************************** */
 
 (function($){
 	
@@ -3527,10 +3548,6 @@ frame.on('all', function( e ) {
 	
 })(jQuery);
 
-/* **********************************************
-     Begin file.js
-********************************************** */
-
 (function($){
 	
 	acf.fields.file = acf.field.extend({
@@ -3538,10 +3555,16 @@ frame.on('all', function( e ) {
 		type: 'file',
 		$el: null,
 		
+		actions: {
+			'ready':	'initialize',
+			'append':	'initialize'
+		},
+		
 		events: {
 			'click [data-name="add"]': 		'add',
 			'click [data-name="edit"]': 	'edit',
 			'click [data-name="remove"]':	'remove',
+			'change input[type="file"]':	'change'
 		},
 		
 		focus: function(){
@@ -3550,6 +3573,17 @@ frame.on('all', function( e ) {
 			
 			this.settings = acf.get_data( this.$el );
 			
+		},
+		
+		initialize: function(){
+			
+			// add attribute to form
+			if( this.$el.hasClass('basic') ) {
+				
+				this.$el.closest('form').attr('enctype', 'multipart/form-data');
+				
+			}
+				
 		},
 		
 		add : function() {
@@ -3586,7 +3620,7 @@ frame.on('all', function( e ) {
 							
 						
 						// find next image field
-						$tr.nextAll('.acf-row').not('.clone').each(function(){
+						$tr.nextAll('.acf-row:visible').each(function(){
 							
 							// get next $field
 							$next = acf.get_field( field_key, $(this) );
@@ -3730,16 +3764,18 @@ frame.on('all', function( e ) {
 			// remove class
 			this.$el.removeClass('has-value');
 			
+		},
+		
+		change: function( e ){
+			
+			this.$el.find('[data-name="id"]').val( e.$el.val() );
+			
 		}
 		
 	});
 	
 
 })(jQuery);
-
-/* **********************************************
-     Begin google-map.js
-********************************************** */
 
 (function($){
 	
@@ -3959,9 +3995,9 @@ frame.on('all', function( e ) {
 		    
 		    
 		    // update inputs
-			this.$el.find('.input-lat').val( lat );
-			this.$el.find('.input-lng').val( lng ).trigger('change');
-			
+		    acf.val( this.$el.find('.input-lat'), lat );
+		    acf.val( this.$el.find('.input-lng'), lng );
+		    
 			
 		    // update marker
 		    this.map.marker.setPosition( latlng );
@@ -4042,7 +4078,7 @@ frame.on('all', function( e ) {
 
 				
 				// update input
-				$el.find('.input-address').val( location.formatted_address ).trigger('change');
+				acf.val( $el.find('.input-address'), location.formatted_address );
 				
 			});
 			
@@ -4094,10 +4130,10 @@ frame.on('all', function( e ) {
 			
 			
 			// clear inputs
-			this.$el.find('.input-address').val('');
-			this.$el.find('.input-lat').val('');
-			this.$el.find('.input-lng').val('');
-			
+			acf.val( this.$el.find('.input-address'), '' );
+			acf.val( this.$el.find('.input-lat'), '' );
+			acf.val( this.$el.find('.input-lng'), '' );
+						
 			
 			// hide marker
 			this.map.marker.setVisible( false );
@@ -4273,10 +4309,6 @@ frame.on('all', function( e ) {
 
 })(jQuery);
 
-/* **********************************************
-     Begin image.js
-********************************************** */
-
 (function($){
 	
 	acf.fields.image = acf.field.extend({
@@ -4284,10 +4316,16 @@ frame.on('all', function( e ) {
 		type: 'image',
 		$el: null,
 		
+		actions: {
+			'ready':	'initialize',
+			'append':	'initialize'
+		},
+		
 		events: {
 			'click [data-name="add"]': 		'add',
 			'click [data-name="edit"]': 	'edit',
 			'click [data-name="remove"]':	'remove',
+			'change input[type="file"]':	'change'
 		},
 		
 		focus: function(){
@@ -4296,6 +4334,17 @@ frame.on('all', function( e ) {
 			
 			this.settings = acf.get_data( this.$el );
 			
+		},
+		
+		initialize: function(){
+			
+			// add attribute to form
+			if( this.$el.hasClass('basic') ) {
+				
+				this.$el.closest('form').attr('enctype', 'multipart/form-data');
+				
+			}
+				
 		},
 		
 		add: function() {
@@ -4330,7 +4379,7 @@ frame.on('all', function( e ) {
 							
 						
 						// find next image field
-						$tr.nextAll('.acf-row').not('.clone').each(function(){
+						$tr.nextAll('.acf-row:visible').each(function(){
 							
 							// get next $field
 							$next = acf.get_field( field_key, $(this) );
@@ -4473,16 +4522,18 @@ frame.on('all', function( e ) {
 			// remove class
 			this.$el.removeClass('has-value');
 			
+		},
+		
+		change: function( e ){
+			
+			this.$el.find('[data-name="id"]').val( e.$el.val() );
+			
 		}
 		
 	});
 	
 
 })(jQuery);
-
-/* **********************************************
-     Begin oembed.js
-********************************************** */
 
 (function($){
 	
@@ -4747,15 +4798,7 @@ acf.add_action('ready append', function( $el ){
 
 })(jQuery);
 
-/* **********************************************
-     Begin post_object.js
-********************************************** */
 
-
-
-/* **********************************************
-     Begin radio.js
-********************************************** */
 
 (function($){
 	
@@ -4798,10 +4841,6 @@ acf.add_action('ready append', function( $el ){
 	});	
 
 })(jQuery);
-
-/* **********************************************
-     Begin relationship.js
-********************************************** */
 
 (function($){
 	
@@ -5250,10 +5289,6 @@ var scroll_timer = null;
 
 })(jQuery);
 
-/* **********************************************
-     Begin select.js
-********************************************** */
-
 (function($){
 	
 	function add_select2( $select, settings ) {
@@ -5519,7 +5554,7 @@ var scroll_timer = null;
 				 start: function() {
 				 	$input.select2("onSortStart");
 				 },
-				 update: function() {
+				 stop: function() {
 				 	$input.select2("onSortEnd");
 				 }
 			});
@@ -5647,10 +5682,6 @@ var scroll_timer = null;
 	
 
 })(jQuery);
-
-/* **********************************************
-     Begin tab.js
-********************************************** */
 
 (function($){
 	
@@ -5988,10 +6019,6 @@ var scroll_timer = null;
 
 })(jQuery);
 
-/* **********************************************
-     Begin url.js
-********************************************** */
-
 (function($){
 	
 	acf.fields.url = acf.field.extend({
@@ -6029,10 +6056,6 @@ var scroll_timer = null;
 	});
 
 })(jQuery);
-
-/* **********************************************
-     Begin validation.js
-********************************************** */
 
 (function($){
     
@@ -6083,10 +6106,11 @@ var scroll_timer = null;
 			
 			
 			// add message
-			if( message !== undefined )
-			{
+			if( message !== undefined ) {
+				
 				$field.children('.acf-input').children('.' + this.message_class).remove();
 				$field.children('.acf-input').prepend('<div class="' + this.message_class + '"><p>' + message + '</p></div>');
+			
 			}
 			
 			
@@ -6166,27 +6190,29 @@ var scroll_timer = null;
 			var self = this;
 			
 			
-			// remove previous error message
-			$form.children('.' + this.message_class).remove();
-			
-			
 			// hide ajax stuff on submit button
-			if( $('#submitdiv').exists() ) {
+			var $submit = $('#submitpost').exists() ? $('#submitpost') : $('#submitdiv');
+			
+			if( $submit.exists() ) {
 				
 				// remove disabled classes
-				$('#submitdiv').find('.disabled').removeClass('disabled');
-				$('#submitdiv').find('.button-disabled').removeClass('button-disabled');
-				$('#submitdiv').find('.button-primary-disabled').removeClass('button-primary-disabled');
+				$submit.find('.disabled').removeClass('disabled');
+				$submit.find('.button-disabled').removeClass('button-disabled');
+				$submit.find('.button-primary-disabled').removeClass('button-primary-disabled');
 				
 				
 				// remove spinner
-				$('#submitdiv .spinner').hide();
+				$submit.find('.spinner').hide();
 				
 			}
 			
 			
 			// validate json
 			if( !json || typeof json.result === 'undefined' || json.result == 1) {
+				
+				// remove previous error message
+				acf.remove_el( $form.children('.' + this.message_class) );
+				
 			
 				// remove hidden postboxes (this will stop them from being posted to save)
 				$form.find('.acf-postbox.acf-hidden').remove();
@@ -6201,13 +6227,14 @@ var scroll_timer = null;
 				
 				
 				// submit form again
-				if( this.$trigger )
-				{
+				if( this.$trigger ) {
+					
 					this.$trigger.click();
-				}
-				else
-				{
+				
+				} else {
+					
 					$form.submit();
+				
 				}
 				
 				
@@ -6216,8 +6243,8 @@ var scroll_timer = null;
 			}
 			
 			
-			// show error message	
-			$form.prepend('<div class="' + this.message_class + '"><p>' + json.message + '</p></div>');
+			// vars
+			var $first_field = null;
 			
 			
 			// show field error messages
@@ -6246,11 +6273,42 @@ var scroll_timer = null;
 					
 					
 					// add error
-					self.add_error( $field, error.message );
+					this.add_error( $field, error.message );
 					
+					
+					// save as first field
+					if( i == 0 ) {
+						
+						$first_field = $field;
+						
+					}
 					
 				}
 			
+			}
+			
+				
+			// get $message
+			var $message = $form.children('.' + this.message_class);
+			
+			if( !$message.exists() ) {
+				
+				$message = $('<div class="' + this.message_class + '"><p></p></div>');
+				
+				$form.prepend( $message );
+				
+			}
+			
+			
+			// update message text
+			$message.children('p').text( json.message );
+			
+			
+			// if message is not in view, scroll to first error field
+			if( !acf.is_in_view($message) && $first_field ) {
+				
+				$("html, body").animate({ scrollTop: ($first_field.offset().top - 32 - 20) }, 500);
+				
 			}
 			
 		},
@@ -6367,10 +6425,6 @@ var scroll_timer = null;
 	
 
 })(jQuery);
-
-/* **********************************************
-     Begin wysiwyg.js
-********************************************** */
 
 (function($){
 	
@@ -6724,3 +6778,4 @@ var scroll_timer = null;
 
 
 })(jQuery);
+
