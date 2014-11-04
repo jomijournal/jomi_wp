@@ -42,6 +42,13 @@ if ( !class_exists( 'RPR_Admin_Menu' ) ) {
 		public /*.void.*/ function rpr_admin_menu() {
 			global $register_plus_redux;
 			global $wpdb;
+			add_menu_page( __( 'Register Plus Redux', 'register-plus-redux' ), __( 'Register Plus Redux', 'register-plus-redux' ), 'manage_options', 'register-plus-redux', array( $this, 'rpr_options_submenu' ) );
+			global $menu_slug;
+			if( file_exists(plugin_dir_path( __FILE__ ).'/readygraph-extension.php')) {
+				add_submenu_page('register-plus-redux', 'Readygraph App', __( 'Readygraph App', 'register-plus-redux' ), 'administrator', $menu_slug, array( $this, 'rpr_readygraph_menu_page'));
+			}
+			else {
+			}
 			if ( !is_multisite() ) {
 				$hookname = add_submenu_page( 'options-general.php', __( 'Register Plus Redux Settings', 'register-plus-redux' ), __( 'Register Plus Redux', 'register-plus-redux' ), 'manage_options', 'register-plus-redux', array( $this, 'rpr_options_submenu' ) );
 			}
@@ -62,6 +69,11 @@ if ( !class_exists( 'RPR_Admin_Menu' ) ) {
 			$user_query = new WP_User_Query( array( 'role' => 'rpr_unverified' ) );
 			if ( 0 < (int) $user_query->total_users || '1' === $register_plus_redux->rpr_get_option( 'verify_user_email' ) || '1' === $register_plus_redux->rpr_get_option( 'verify_user_admin' ) ) {
 				add_submenu_page( 'users.php', __( 'Unverified Users', 'register-plus-redux' ), __( 'Unverified Users', 'register-plus-redux' ), 'promote_users', 'unverified-users', array( $this, 'rpr_users_submenu' ) );
+			}
+			if( file_exists(plugin_dir_path( __FILE__ ).'/readygraph-extension.php')) {
+				add_submenu_page('register-plus-redux', 'Go Premium', __( 'Go Premium', 'register-plus-redux' ), 'administrator', 'readygraph-go-premium', array( $this, 'rpr_readygraph_premium_page'));
+			}
+			else {
 			}
 		}
 
@@ -99,7 +111,49 @@ if ( !class_exists( 'RPR_Admin_Menu' ) ) {
 		public /*.void.*/ function rpr_options_submenu_styles() {
 			if ( !is_multisite() ) wp_enqueue_style( 'thickbox' );
 		}
-
+		public /*.void.*/ function rpr_readygraph_menu_page(){
+			global $wpdb;
+			$current_page = isset($_GET['ac']) ? $_GET['ac'] : '';
+			switch($current_page)
+			{
+				case 'signup-popup':
+					include('extension/readygraph/signup-popup.php');
+					break;
+				case 'invite-screen':
+					include('extension/readygraph/invite-screen.php');
+					break;
+				case 'social-feed':
+					include('extension/readygraph/social-feed.php');
+					break;
+				case 'site-profile':
+					include('extension/readygraph/site-profile.php');
+					break;
+				case 'customize-emails':
+					include('extension/readygraph/customize-emails.php');
+					break;
+				case 'deactivate-readygraph':
+					include('extension/readygraph/deactivate-readygraph.php');
+					break;
+				case 'welcome-email':
+					include('extension/readygraph/welcome-email.php');
+					break;
+				case 'retention-email':
+					include('extension/readygraph/retention-email.php');
+					break;
+				case 'invitation-email':
+					include('extension/readygraph/invitation-email.php');
+					break;	
+				case 'faq':
+					include('extension/readygraph/faq.php');
+					break;
+				default:
+					include('extension/readygraph/admin.php');
+					break;
+			}
+		}
+		public /*.void.*/ function rpr_readygraph_premium_page(){
+			include('extension/readygraph/go-premium.php');
+		}
 		public /*.void.*/ function rpr_options_submenu() {
 			global $register_plus_redux;
 			if ( isset( $_POST['update_settings'] ) ) {

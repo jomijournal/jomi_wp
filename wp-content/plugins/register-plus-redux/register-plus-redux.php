@@ -1,11 +1,11 @@
 <?php
 /*
-Author: radiok
+Author: radiok, Tanay Lakhani
 Plugin Name: Register Plus Redux
 Author URI: http://radiok.info/
 Plugin URI: http://radiok.info/blog/category/register-plus-redux/
 Description: Enhances the user registration process with complete customization and additional administration options.
-Version: 3.9.11
+Version: 4.0.3
 Text Domain: register-plus-redux
 Domain Path: /languages
 */
@@ -26,7 +26,7 @@ Domain Path: /languages
 // TODO: Enhancement- Alter admin pages to match registration/signup
 // TODO: Enhancement- Widget is lame/near worthless
 
-define( 'RPR_VERSION', '3.9.11' );
+define( 'RPR_VERSION', '4.0.3' );
 define( 'RPR_ACTIVATION_REQUIRED', '3.9.6' );
 
 if ( !class_exists( 'Register_Plus_Redux' ) ) {
@@ -58,6 +58,7 @@ if ( !class_exists( 'Register_Plus_Redux' ) ) {
 			global $wp_roles;
 			add_role( 'rpr_unverified', 'Unverified' );
 			update_option( 'register_plus_redux_last_activated', RPR_ACTIVATION_REQUIRED );
+			add_option('rg_rpr_plugin_do_activation_redirect', true);
 		}
 
 		public static /*.void.*/ function rpr_uninstall() {
@@ -616,6 +617,42 @@ if ( !class_exists( 'Register_Plus_Redux' ) ) {
 			return 'text/html';
 		}
 	}
+}
+if( file_exists(plugin_dir_path( __FILE__ ).'/readygraph-extension.php' ) ) {
+		include "readygraph-extension.php";
+}
+function rpr_delete_rg_options() {
+	delete_option('readygraph_access_token');
+	delete_option('readygraph_application_id');
+	delete_option('readygraph_refresh_token');
+	delete_option('readygraph_email');
+	delete_option('readygraph_settings');
+	delete_option('readygraph_delay');
+	delete_option('readygraph_enable_sidebar');
+	delete_option('readygraph_auto_select_all');
+	delete_option('readygraph_enable_notification');
+	delete_option('readygraph_enable_branding');
+	delete_option('readygraph_send_blog_updates');
+	delete_option('readygraph_send_real_time_post_updates');
+	delete_option('readygraph_popup_template');
+}
+function rpr_rrmdir($dir) {
+	  if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+		  if ($object != "." && $object != "..") {
+			if (filetype($dir."/".$object) == "dir") 
+			   rpr_rrmdir($dir."/".$object); 
+			else unlink   ($dir."/".$object);
+		  }
+		}
+		reset($objects);
+		rmdir($dir);
+	  }
+	  $del_url = plugin_dir_path( __FILE__ );
+	  unlink($del_url.'/readygraph-extension.php');
+	 $setting_url="admin.php?page=register-plus-redux";
+	  echo'<script> window.location="'.admin_url($setting_url).'"; </script> ';
 }
 
 // include secondary php files outside of object otherwise $register_plus_redux will not be an instance yet

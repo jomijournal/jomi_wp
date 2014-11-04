@@ -1,10 +1,10 @@
 === Register Plus Redux ===
-Contributors: Dabelon, radiok, skullbit
+Contributors: Dabelon, tanaylakhani, radiok
 Donate link: http://radiok.info/donate/
-Tags: registration, register, plus, redux, password, invitation, code, email, verification, disclaimer, license, agreement, privacy, policy, logo, moderation, user
+Tags: registration, register, plus, redux, password, invitation, subscription, code, email, verification, disclaimer, license, agreement, privacy, policy, logo, moderation, user
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 3.9.11
+Stable tag: 4.0.3
 
 Enhances the user registration process with complete customization and additional administration options.
 
@@ -45,6 +45,31 @@ Enhancements to registration include:
 * Specify CSS to be applied to registration or login page
 
 Register Plus Redux was forked from Register Plus, developed by skullbit, after that plugin was abandoned in 2008. Register Plus Redux resolves many known bugs and added compatibility with WordPress 3.0+.
+
+Versions 4.0 and later of Register Plus Redux include the optional functionality of ReadyGraph.  If they choose to do so, plugin users can enable ReadyGraph through Register Plus Redux.  When ReadyGraph is activated, a set of growth features, which include: a signup pop-up form, invite/sharing capabilities and automated email re-engagement campaigns are initiated for the purpose of increasing the rate of user-growth.  The following information provides additional details on these features and the benefits that they deliver.
+
+= ReadyGraph App =
+ReadyGraph is a system that automates the growth of your site’s userbase. It is optimized to deliver audience growth and motivate users to consistently revisit your site.
+= Optimized Signup Form =
+ReadyGraph’s signup form with intelligent pop-up functionality and one-click login is designed to maximize signups to your email list. You can configure when the popup appears so as to maximize the likelihood that the user is engaged enough to register for your list.
+= Viral Friend Invites =
+ReadyGraph adds a friend invite process to your site’s signup flow. We then power the entire viral loop by sending email and Facebook invitations that encourage your visitors’ friends to signup for your site.
+= Automated Re-engagement Emails =
+ReadyGraph’s automated email system encourages visitors to return to your site. Users receive optimized emails such as a welcome email, re-engagement email, regular digest with new content from your blog, and social emails. All emails are configurable including the ability to turn on and off individual campaigns. We handle all sending to maximize deliverability.
+= Analytics =
+Track daily-new subscribers, daily invites, total traffic, and other key metrics that quantify growth and user engagement. ReadyGraph safely stores user data in the cloud so you can access data from anywhere.
+= Newsfeed =
+ReadyGraph’s newsfeed is an optional overlay on your site where your users can engage with others in your community and recommend your content or products to each other. It is like having a social network that engages users embedded on your site. Users can leave comments, ‘like’ comments left by other subscribers and ‘follow’ other subscribers. Subscribers will receive automated email updates based on these actions.
+
+= Want To Grow Even Faster? =
+Try [ReadyGraph premium](https://readygraph.com/accounts/payment/) for free to get these advanced features:
+1. Monthly Promotion to 10,000 New Users
+2. Unlimited New Blog Post Emails
+3. Unlimited Viral Email Invites
+4. Unlimited Facebook Invites
+5. Many more premium features added all the time
+Get it here!
+If you have questions or concerns contact us anytime at info@readygraph.com
 
 Available in the following translations:
 
@@ -109,6 +134,103 @@ Really more for me than you, but who's nitpicking.
 
 HTML attributes should go in the following order name -> id -> class
 
+
+= ReadyGraph FAQ =
+
+= GENERAL QUESTIONS: =
+
+**What is ReadyGraph?**
+
+ReadyGraph is a tool that makes it easy for websites to grow and manage their user-base, by allowing/utilizing: **user sign-up**, through an optional notification tab and an intelligent pop-up, with one-click sign-up and social login options; **user friend invitations**, through the sign-up pop-up, or a sidebar button; **automated emails** (optional) that keep visitors coming back, such as welcome messages to greet new users, recent site updates/posts to keep them informed, gentle reminders for inactive users, and a weekly digest of new content; **mass emailing**, for fast communication to all your subscribers; **user-interaction**, through an optional comment-feed sidebar; **analytic tools**, to track new subscribers, daily visits, and other key metrics that quantify your website’s growth and user engagement.
+
+**How do I install ReadyGraph?**
+
+After installing this plug-in, you can activate the ReadyGraph features by connecting/signing-up for your ReadyGraph account.
+
+**How do I uninstall ReadyGraph?**
+
+You can deactivate the ReadyGraph features by navigating to the upper-right corner of the “ReadyGraph App” page, clicking the drop-down menu with your email address, and disconnecting your ReadyGraph account.
+
+**Can I delay the sign-up pop-up?**
+
+Yes, you can delay the pop-up for up to 20 minutes; however, the most effective delay is only a few seconds. That ensures that users are engaged, before showing the pop-up to them. 
+
+**How do I check my website’s stats?**
+
+You can check your website’s stats by clicking the “Insights” button at the upper-right corner of the “ReadyGraph App” page. There, you will find various metrics about your site growth.
+
+**Can I use both the pop-up and the form widget?**
+
+Yes, you can; they will not conflict with each other.
+
+**How do I contact someone for support, or to suggest a feature?**
+
+You can contact us at info@readygraph.com. We appreciate all feedback.
+
+**I’m having problems with the latest version of the plug-in; can I switch back to an older version?**
+
+Yes, just navigate to the “Developers” tab on the wordpress.org plug-in page, and select the version that works for you.
+
+= ACCOUNT QUESTIONS: =
+
+**How do I change my account email address?**
+
+Contact us as info@readygraph.com.
+
+**How do I turn off email notifications from ReadyGraph?**
+
+You can turn them off via the account settings page on ReadyGraph.com.
+
+**How do I disconnect ReadyGraph from my site?**
+
+You can disconnect ReadyGraph from your site by navigating to the upper-right corner of the “ReadyGraph App” page in this plug-in, and clicking the drop-down menu with your email address on it; there will be an option there to disconnect ReadyGraph from your site.
+
+= CUSTOMIZATION QUESTIONS: =
+
+**Can I customize the pop-up?**
+
+Yes, you can choose a template that matches your site design, from the various templates available.
+
+**Can I customize the friend-invite form?**
+
+You can customize the text on the friend invite form to something that suits your website.
+
+**Can I customize my emails?**
+
+Yes, on the right side of the “ReadyGraph App” page, you will find a link to a page where you can Configure/Enable/Disable the various automated emails that you can send via ReadyGraph.
+
+= QUESTIONS ABOUT YOUR SUBSCRIBERS: =
+
+**How do I view my subscribers?**
+
+Clicking the “Insights” button at the top of the “ReadyGraph App” page of this plug-in will take you to a page where you can view a list of your subscribers.
+
+**How do I mail my subscribers?**
+
+On the right side of the “ReadyGraph App” page, you will find a link to a page where you can send mass emails to your subscribers.
+
+**Can I import a list of existing subscribers?**
+
+This is a feature currently under development and is scheduled to be released in our next update.
+
+**Can I export a list of my subscribers?**
+
+This is a feature currently under development and is scheduled to be released in our next update. 
+
+**If I decide to stop using ReadyGraph, do I keep my subscribers?**
+
+Yes, contact us at info@readygraph.com for assistance.
+
+**Can I send automated emails/newsletters to my subscribers?**
+
+On the right side of the “ReadyGraph App” page, you will find a link to a page where you can Enable/Disable/Configure the various automated emails that you can send via ReadyGraph.
+
+**Is ReadyGraph necessary in order to use this plug-in?**
+
+No, it isn’t; you can use this plug-in without ReadyGraph features enabled, but you would be missing out on added growth opportunities.
+
+If you have questions or concerns, contact us anytime at [info@readygraph.com](mailto:info@readygraph.com)
+
 == Screenshots ==
 
 1. A Modified Registration Page
@@ -117,6 +239,23 @@ HTML attributes should go in the following order name -> id -> class
 4. Unverified User Management
 
 == Changelog ==
+
+= 4.0.3 =
+October 7, 2014 by tanaylakhani
+
+* ReadyGraph Bug Fix, broken links.
+
+= 4.0.1 =
+October 7, 2014 by radiok
+
+* Properly fixed uninitialized $errors object
+
+= 4.0.0 =
+October 6, 2014 by tanaylakhani, radiok
+
+* ReadyGraph Growth Engine added as an extension- tanaylakhani
+* Fixed jQuery that was altering attributes when it should be altering properties- radiok
+* Fixed uninitialized $errors object- radiok
 
 = 3.9.11 =
 September 11, 2014 by radiok
