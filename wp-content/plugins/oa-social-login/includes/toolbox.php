@@ -79,6 +79,8 @@ function oa_social_login_user_notification ($user_id, $user_identity_provider)
 	$user = new WP_User ($user_id);
 	$user_login = stripslashes ($user->user_login);
 
+	$user_email = $user->user_email;
+
 	//The blogname option is escaped with esc_html on the way into the database
 	$blogname = wp_specialchars_decode (get_option ('blogname'), ENT_QUOTES);
 
@@ -89,6 +91,9 @@ function oa_social_login_user_notification ($user_id, $user_identity_provider)
 	//Setup Mail Body
 	$body = sprintf (__ ('New user registration on your site %s:', 'oa_social_login'), $blogname) . "\r\n\r\n";
 	$body .= sprintf (__ ('Username: %s', 'oa_social_login'), $user_login) . "\r\n\r\n";
+
+	$body .= sprintf (__ ('Email: %s', 'oa_social_login'), $user_email) . "\r\n\r\n";
+
 	$body .= sprintf (__ ('Social Network: %s', 'oa_social_login'), $user_identity_provider) . "\r\n";
 
 	//Send Mail
