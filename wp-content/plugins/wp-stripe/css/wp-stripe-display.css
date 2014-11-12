@@ -1,0 +1,516 @@
+/*
+* WP-Stripe - Default Stylesheet
+*/
+
+#wp-stripe-wrap {
+    display:block;
+    padding:10px;
+    margin:0px;
+    width: 400px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+/* Payment Form Link */
+
+#wp-stripe-modal-button {
+    margin-bottom: 10px;
+}
+
+#wp-stripe-modal-button,
+form#wp-stripe-payment-form .stripe-submit-button {
+    overflow: hidden;
+    display: inline-block;
+    visibility: visible!important;
+    background-image: -webkit-linear-gradient(#28a0e5,#015e94);
+    background-image: -moz-linear-gradient(#28a0e5,#015e94);
+    background-image: -ms-linear-gradient(#28a0e5,#015e94);
+    background-image: -o-linear-gradient(#28a0e5,#015e94);
+    background-image: -webkit-linear-gradient(#28a0e5,#015e94);
+    background-image: -moz-linear-gradient(#28a0e5,#015e94);
+    background-image: -ms-linear-gradient(#28a0e5,#015e94);
+    background-image: -o-linear-gradient(#28a0e5,#015e94);
+    background-image: linear-gradient(#28a0e5,#015e94);
+    -webkit-font-smoothing: antialiased;
+    border: 0;
+    padding: 1px;
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    -ms-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    -o-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    cursor: pointer; cursor: hand;
+}
+
+#wp-stripe-modal-button:not(:disabled):active,
+form#wp-stripe-payment-form .stripe-submit-button:not(:disabled):active {
+    background: #005d93;
+}
+
+#wp-stripe-modal-button span,
+form#wp-stripe-payment-form .stripe-submit-button span {
+    display: block;
+    position: relative;
+    padding: 0 12px;
+    height: 30px;
+    line-height: 30px;
+    background: #1275ff;
+    background-image: -webkit-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -moz-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -ms-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -o-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -webkit-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -moz-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -ms-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: -o-linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    background-image: linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    -ms-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    -o-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#wp-stripe-modal-button:not(:disabled):active span,
+form#wp-stripe-payment-form .stripe-submit-button:not(:disabled):active {
+    color: #eee;
+    background: #008cdd;
+    background-image: -webkit-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -moz-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -ms-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -o-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -webkit-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -moz-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -ms-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: -o-linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    background-image: linear-gradient(#008cdd,#008cdd 85%,#239adf);
+    -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    -ms-box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    -o-box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+}
+
+form#wp-stripe-payment-form .stripe-submit-button {
+    position: relative;
+    left: 8px;
+}
+
+#wp-stripe-types {
+        display:block;
+        width:256px;
+        height:18px;
+        background: url('../images/types.png') no-repeat top left;
+        margin-bottom:20px;
+}
+
+/* Payment Form Elements */
+
+form#wp-stripe-payment-form {
+         display:block;
+}
+
+.stripe-row-right,
+.stripe-row-left{width:50%;}
+
+form#wp-stripe-payment-form h2.stripe-header {
+        padding:10px;
+        color:#fff;
+        font-size:14px;
+        font-weight:bold;
+        text-shadow: 0 -1px 1px rgba(0,0,0,0.3);
+        border-top:1px solid #268DFC;
+        border-bottom:1px solid #004EA2;
+        background:#0068DE;
+        margin-bottom:10px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -webkit-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+}
+
+form#wp-stripe-payment-form p.stripe-display-comment {
+        margin:8px 0;
+        font-size:12px;
+        color:#777;
+}
+
+form#wp-stripe-payment-form label {
+        letter-spacing:1px;
+        text-transform:uppercase;
+        color:#777;
+        font-size:12px;
+}
+
+form#wp-stripe-payment-form .stripe-row {
+        overflow:visible;
+        clear:both;
+        padding:5px 10px;
+}
+
+form#wp-stripe-payment-form .stripe-row-left,
+form#wp-stripe-payment-form .stripe-row-right {
+        float:left;
+        overflow:auto;
+}
+
+.stripe-spinner {
+        display:none;
+        margin:10px;
+        padding: 8px 15px;
+        height:15px;
+        width:70px;
+        content:" ";
+        background: url('../images/spinner.gif') no-repeat 50% 50%;
+        border: 1px solid #afd5ff;
+        -o-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+}
+
+.stripe-valid {
+        color: #638731 !important;
+        background-color:#d9fba8 !important;
+}
+
+.stripe-invalid {
+        color:#873d31 !important;
+        background-color:#fbbcb1 !important;
+}
+
+.wp-stripe-poweredby {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        color:#777;
+        font-size:10px;
+        padding:0 20px;
+}
+
+.wp-stripe-poweredby a {
+        color:#28a0e5;
+        text-decoration: none;        
+}
+
+/* Response Styling */
+
+.wp-stripe-notification {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        width:360px;
+        padding:10px;
+        margin:10px 0 10px 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+}
+
+.wp-stripe-currency {
+        text-transform: uppercase;
+}
+
+.wp-stripe-success {
+        color:#345607;
+        background-color:#D1F2A5;
+        text-shadow:0 1px 1px rgba(255,255,255,0.2);
+}
+
+.wp-stripe-failure {
+        color:#4E1E0F;
+        background-color:#FF9F80;
+        text-shadow:0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* Form Styling */
+
+
+form#wp-stripe-payment-form .wp-stripe-details label {
+        color:#777;
+}
+
+form#wp-stripe-payment-form .wp-stripe-card input {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+}
+
+form#wp-stripe-payment-form .wp-stripe-card input.card-cvc {
+        width:120px;
+}
+
+form#wp-stripe-payment-form input,
+form#wp-stripe-payment-form select,
+form#wp-stripe-payment-form textarea {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: normal;
+        line-height: normal;
+        margin-bottom: 3px !important;
+}
+form#wp-stripe-payment-form textarea,
+form#wp-stripe-payment-form input {
+        position:relative;
+        width:338px;
+        background-color:#fff;
+}
+
+form#wp-stripe-payment-form .wp-stripe-meta label {
+        position:relative;
+        top:3px;
+}
+
+input.wp-stripe-name {background: url('../images/h-name.png') no-repeat 8px 8px;}
+input.wp-stripe-email {background: url('../images/h-email.png') no-repeat 8px 10px;}
+textarea.wp-stripe-comment {background: url('../images/h-comment.png') no-repeat 8px 10px;}
+input.wp-stripe-card-amount {background: url('../images/h-amount.png') no-repeat 8px 8px;}
+input.card-number {background: url('../images/h-card.png') no-repeat 8px 10px;}
+input.card-cvc {background: url('../images/h-cvc.png') no-repeat 8px 10px;}
+
+form#wp-stripe-payment-form select {
+        cursor: pointer;
+}
+
+input[type=checkbox], input[type=radio] {
+        cursor: pointer;
+}
+
+.stripe-expiry {
+        font-size:12px;
+        letter-spacing:1px;
+        color:#bbb;
+        text-shadow:0 1px 0 #fff;
+}
+
+form#wp-stripe-payment-form select {
+        margin-top:0px !important;
+        display:block;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 2px 7px 2px 7px !important;
+        height: auto !important;
+        text-shadow: 0 1px 0 white;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#E8E8E8));
+        background-image: -moz-linear-gradient(top, #F9F9F9, #E8E8E8);
+        background-image: -o-linear-gradient(top, #F9F9F9, #E8E8E8);
+        -webkit-box-shadow: inset 0 1px 0 white;
+        -moz-box-shadow: inset 0 1px 0 white;
+        box-shadow: inset 0 1px 0 white;
+}
+
+form#wp-stripe-payment-form select:hover {
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#E8E8E8), to(#F9F9F9));
+        background-image: -moz-linear-gradient(top, #E8E8E8, #F9F9F9);
+        background-image: -o-linear-gradient(top, #E8E8E8, #F9F9F9);
+}
+
+form#wp-stripe-payment-form input,
+form#wp-stripe-payment-form textarea,
+form#wp-stripe-payment-form select,
+form#wp-stripe-payment-form .uneditable-input {
+        display: inline-block;
+        height: 18px;
+        padding: 8px 8px 8px 32px;
+        font-size: 13px;
+        line-height: 18px;
+        color: #808080;
+        border: 1px solid #ccc;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+}
+
+form#wp-stripe-payment-form input[type=checkbox], form#wp-stripe-payment-form input[type=radio] {
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin: 3px 0;
+        *margin-top: 0;
+        /* IE6-7 */
+
+        line-height: normal;
+        border: none;
+}
+
+form#wp-stripe-payment-form select {
+        height: 27px;
+        line-height: 27px;
+}
+
+form#wp-stripe-payment-form input[type=button], form#wp-stripe-payment-form input[type=reset], form#wp-stripe-payment-form input[type=submit] {
+        width: auto;
+        height: auto;
+}
+
+form#wp-stripe-payment-form input[type=checkbox] {
+        position:relative;
+        top:2px;
+        margin-right:5px;
+}
+
+form#wp-stripe-payment-form select[multiple] {
+        height: inherit;
+        background-color: #ffffff;
+}
+form#wp-stripe-payment-form textarea {
+        height: auto;
+}
+
+:-moz-placeholder {
+        color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+        color: #bfbfbf;
+}
+form#wp-stripe-payment-form input, form#wp-stripe-payment-form textarea {
+        -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+        -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+        -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+        -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+        transition: border linear 0.2s, box-shadow linear 0.2s;
+        -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+form#wp-stripe-payment-form input:focus, form#wp-stripe-payment-form textarea:focus {
+        outline: 0;
+        border-color: rgba(0, 104, 222, 0.8);
+        -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 104, 222, 0.6);
+        -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 104, 222, 0.6);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(0, 104, 222, 0.6);
+}
+input[type=file]:focus, input[type=checkbox]:focus, select:focus {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        outline: 1px dotted #666;
+}
+
+/* CSS Spinner */
+
+@-webkit-keyframes three-quarters {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes three-quarters {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes three-quarters {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes three-quarters {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles for old versions of IE */
+.spinner {
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+.spinner-gap {
+    padding-left: 28px!important;
+}
+
+/* :not(:required) hides this rule from IE9 and below */
+.spinner:not(:required) {
+
+    display: none;
+    position:absolute;
+    top:8px;
+    left:8px;
+    -webkit-animation: three-quarters 1250ms infinite linear;
+    -moz-animation: three-quarters 1250ms infinite linear;
+    -ms-animation: three-quarters 1250ms infinite linear;
+    -o-animation: three-quarters 1250ms infinite linear;
+    animation: three-quarters 1250ms infinite linear;
+    border: 2px solid #fff;
+    border-right-color: transparent;
+    border-radius: 7px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 14px;
+    height: 14px;
+}
