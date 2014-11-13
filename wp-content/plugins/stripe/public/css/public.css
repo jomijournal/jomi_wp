@@ -1,0 +1,18 @@
+/* Payment details at the top of the post. */
+.sc-payment-details-wrap { 
+	background: #dff0d8;
+	border: 0;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.sc-payment-details-error {
+	background: #ffbaba;
+}
+
+/* Basic form styles. Most based off Bootstrap 3. */
+
+.sc-checkout-form {
+	margin-bottom: 15px;
+}
+
