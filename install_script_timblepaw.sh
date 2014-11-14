@@ -116,6 +116,15 @@ echo time to go manual for the rest of the instructions...
 #mysql -u root -p  < jomi.sql
 
 
+### NOTE: IMPORTANT:
+# In order to get mail to work correctly, you must manually set the template for mandril
+# in the wordpress. As wordpress pulls from mandrill, this can't be automated.
+# Login to the admin account under Jomi, navigate to the mandrill settings page, 
+# And set the template to the currently used one (at the moment is newbert).
+# Can cross reference the current jomi site to see what template is being used.
+# 
+
+
 
 
 #todo:
