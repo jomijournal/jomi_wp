@@ -305,6 +305,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 			$caching = apply_filters( 'wpseo_enable_xml_sitemap_transient_caching', true );
 
 			if ( $caching ) {
+				do_action('wpseo_sitemap_stylesheet_cache_' . $type, $this );
 				$this->sitemap = get_transient( 'wpseo_sitemap_cache_' . $type . '_' . $this->n );
 			}
 
@@ -627,8 +628,6 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 
 			$query = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts {$join_filter} WHERE post_status IN ('publish','inherit') AND post_password = '' AND post_author != 0 AND post_date != '0000-00-00 00:00:00' AND post_type = %s " . $where_filter, $post_type );
 
-			//print_r($query);
-
 			$typecount = $wpdb->get_var( $query );
 
 			if ( $total > $typecount ) {
@@ -694,8 +693,6 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 
 			$status = ( $post_type == 'attachment' ) ? 'inherit' : 'publish';
 
-			$status = 'preprint';
-
 			$parsed_home = parse_url( $this->home_url );
 			$host        = '';
 			$scheme      = 'http';
@@ -715,7 +712,7 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 
 				// Optimized query per this thread: http://wordpress.org/support/topic/plugin-wordpress-seo-by-yoast-performance-suggestion
 				// Also see http://explainextended.com/2009/10/23/mysql-order-by-limit-performance-late-row-lookups/
-				$query = $wpdb->prepare( "SELECT l.ID, post_title, post_content, post_name, post_author, post_parent, post_modified_gmt, post_date, post_date_gmt FROM ( SELECT ID FROM $wpdb->posts {$join_filter} WHERE post_status IN ('%s','publish') AND post_password = '' AND post_type = '%s' AND post_author != 0 AND post_date != '0000-00-00 00:00:00' {$where_filter} ORDER BY post_modified ASC LIMIT %d OFFSET %d ) o JOIN $wpdb->posts l ON l.ID = o.ID ORDER BY l.ID",
+				$query = $wpdb->prepare( "SELECT l.ID, post_title, post_content, post_name, post_author, post_parent, post_modified_gmt, post_date, post_date_gmt FROM ( SELECT ID FROM $wpdb->posts {$join_filter} WHERE post_status = '%s' AND post_password = '' AND post_type = '%s' AND post_author != 0 AND post_date != '0000-00-00 00:00:00' {$where_filter} ORDER BY post_modified ASC LIMIT %d OFFSET %d ) o JOIN $wpdb->posts l ON l.ID = o.ID ORDER BY l.ID",
 					$status, $post_type, $steps, $offset
 				);
 
@@ -758,9 +755,13 @@ if ( ! class_exists( 'WPSEO_Sitemaps' ) ) {
 						$url = array();
 
 						if ( isset( $p->post_modified_gmt ) && $p->post_modified_gmt != '0000-00-00 00:00:00' && $p->post_modified_gmt > $p->post_date_gmt ) {
-							$url['mod'] = $p->post_date_gmt;
+							$url['mod'] = $p->post_modified_gmt;
 						} else {
-							$url['mod'] = $p->post_date;
+							if ( '0000-00-00 00:00:00' != $p->post_date_gmt ) {
+								$url['mod'] = $p->post_date_gmt;
+							} else {
+								$url['mod'] = $p->post_date;
+							}
 						}
 
 						$url['loc'] = get_permalink( $p );
