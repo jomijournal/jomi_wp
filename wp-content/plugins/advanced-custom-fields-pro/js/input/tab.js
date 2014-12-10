@@ -31,7 +31,7 @@
 			// vars
 			var $el = this.$field.find('.acf-tab'),
 				$group = this.$field.siblings('.acf-tab-wrap'),
-				key = this.settings.key;
+				key = this.$field.data('key');
 			
 			
 			// template
@@ -119,6 +119,10 @@
 				}
 				
 			});
+			
+			
+			// action for 3rd party customization
+			acf.do_action('refresh');
 
 		},
 		
@@ -165,7 +169,7 @@
 		hide: function( $field, context ){
 			
 			// vars
-			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + this.settings.key + '"]'),
+			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + $field.data('key') + '"]'),
 				$li = $a.parent();
 				
 			
@@ -217,7 +221,7 @@
 		show: function( $field, context ){
 			
 			// vars
-			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + this.settings.key + '"]'),
+			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + $field.data('key') + '"]'),
 				$li = $a.parent();
 				
 			

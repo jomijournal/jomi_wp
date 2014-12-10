@@ -4,8 +4,7 @@
 	acf.pro = acf.model.extend({
 		
 		actions: {
-			'conditional_logic_show_field': 'show_field_cl',
-			'conditional_logic_hide_field': 'hide_field_cl'
+			'refresh': 	'refresh',
 		},
 		
 		filters: {
@@ -22,93 +21,79 @@
 		
 		},
 		
-		show_field_cl : function( $field ){
-			
-			// bail early if not a sub field
-			if( ! acf.is_sub_field($field) ) {
-				
-				return;
-				
-			}
-			
-			
-			// bail early if not a td
-			if( ! $field.is('td') ) {
-				
-				return;
-				
-			}
-			
-			
-			// vars
-			var key = acf.get_field_key( $field ),
-				$table = $field.closest('.acf-table'),
-				$th = $table.find('> thead > tr > th[data-key="' + key + '"]'),
-				$td = $table.find('> tbody > tr:not(.acf-clone) > td[data-key="' + key + '"]');
-			
-			
-			// remove class
-			$field.removeClass('appear-empty');
-			
-			
-			// show entire column
-			$td.filter('.hidden-by-conditional-logic').addClass('appear-empty');
-			$th.removeClass('hidden-by-conditional-logic');
-			
-			
-			// render table
-			this.render_table( $table );
-			
-		},
 		
-		hide_field_cl : function( $field ){
+		/*
+		*  refresh
+		*
+		*  This function will run when acf detects a refresh is needed on the UI
+		*  Most commonly after ready / conditional logic change
+		*
+		*  @type	function
+		*  @date	10/11/2014
+		*  @since	5.0.9
+		*
+		*  @param	n/a
+		*  @return	n/a
+		*/
+		
+		refresh: function(){
 			
-			// debug
-			//console.log('conditional_logic_hide_field %o', $field);
+			// reference
+			var self = this;
 			
-			// bail early if not a sub field
-			if( ! acf.is_sub_field($field) ) {
+			
+			// loop over all table layouts
+			$('.acf-input-table.table-layout').each(function(){
 				
-				return;
+				// vars
+				var $table = $(this);
 				
-			}
-			
-			
-			// bail early if not a td
-			if( ! $field.is('td') ) {
 				
-				return;
+				// loop over th
+				$table.find('> thead th.acf-th').each(function(){
+					
+					// vars
+					var $th = $(this),
+						$td = $table.find('> tbody > tr > td[data-key="' + $th.attr('data-key') + '"]');
+					
+					
+					// clear class
+					$td.removeClass('appear-empty');
+					$th.removeClass('hidden-by-conditional-logic');
+					
+					
+					// remove clone if needed
+					if( $td.length > 1 ) {
+						
+						$td = $td.not(':last');
+						
+					}
+					
+					
+					// add classes
+					if( $td.not('.hidden-by-conditional-logic').length == 0 ) {
+						
+						$th.addClass('hidden-by-conditional-logic');
+						
+					} else {
+						
+						$td.addClass('appear-empty');
+						
+					}
+					
+				});
 				
-			}
-			
-			
-			// vars
-			var key = acf.get_field_key( $field ),
-				$table = $field.closest('.acf-table'),
-				$th = $table.find('> thead > tr > th[data-key="' + key + '"]'),
-				$td = $table.find('> tbody > tr:not(.acf-clone) > td[data-key="' + key + '"]');
-			
-			
-			// add class
-			$field.addClass('appear-empty');
-			
-			//console.log($td);
-			// if all cells are hidden, hide the entire column
-			if( $td.filter('.hidden-by-conditional-logic').length == $td.length ) {
 				
-				$td.removeClass('appear-empty');
-				$th.addClass('hidden-by-conditional-logic');
+				// render table widths
+				self.render_table( $table );
 				
-			}
-			
-			
-			// render table
-			this.render_table( $table );
+			});
 			
 		},
 		
 		render_table : function( $table ){
 			
+			//console.log( 'render_table %o', $table);
 			// bail early if table is row layout
 			if( $table.hasClass('row-layout') ) {
 			
@@ -206,7 +191,8 @@
 		
 		actions: {
 			'ready':	'initialize',
-			'append':	'initialize'
+			'append':	'initialize',
+			'show':		'show'
 		},
 		
 		events: {
@@ -220,7 +206,7 @@
 			this.$tbody = this.$el.find('tbody:first');
 			this.$clone = this.$tbody.children('tr.acf-clone');
 			
-			this.settings = acf.get_data( this.$el );
+			this.o = acf.get_data( this.$el );
 			
 		},
 		
@@ -243,7 +229,7 @@
 			
 			
 			// sortable
-			if( this.settings.max != 1 ) {
+			if( this.o.max != 1 ) {
 				
 				// reference
 				var self = this,
@@ -285,7 +271,8 @@
 
 			
 			// set column widths
-			acf.pro.render_table( this.$el.children('table') );
+			// no longer needed due to refresh action in acf.pro model
+			//acf.pro.render_table( this.$el.children('table') );
 			
 			
 			// disable clone inputs
@@ -294,6 +281,16 @@
 			
 			// render
 			this.render();
+			
+		},
+		
+		show: function(){
+			
+			this.$tbody.find('.acf-field:visible').each(function(){
+				
+				acf.do_action('show_field', $(this));
+				
+			});
 			
 		},
 		
@@ -326,7 +323,7 @@
 			
 			
 			// row limit reached
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 				
 				this.$el.addClass('disabled');
 				this.$el.find('> .acf-hl .acf-button').addClass('disabled');
@@ -353,9 +350,9 @@
 			
 			
 			// validate
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 			
-				alert( acf._e('repeater','max').replace('{max}', this.settings.max) );
+				alert( acf._e('repeater','max').replace('{max}', this.o.max) );
 				return false;
 				
 			}
@@ -416,9 +413,9 @@
 			
 			
 			// validate
-			if( this.count() <= this.settings.min ) {
+			if( this.count() <= this.o.min ) {
 			
-				alert( acf._e('repeater','min').replace('{min}', this.settings.min) );
+				alert( acf._e('repeater','min').replace('{min}', this.o.min) );
 				return false;
 			}
 			
@@ -459,7 +456,8 @@
 		
 		actions: {
 			'ready':	'initialize',
-			'append':	'initialize'
+			'append':	'initialize',
+			'show':		'show'
 		},
 		
 		events: {
@@ -478,12 +476,12 @@
 			
 			
 			// get options
-			this.settings = acf.get_data( this.$el );
+			this.o = acf.get_data( this.$el );
 			
 			
 			// min / max
-			this.settings.min = this.settings.min || 0;
-			this.settings.max = this.settings.max || 0;
+			this.o.min = this.o.min || 0;
+			this.o.max = this.o.max || 0;
 			
 		},
 		
@@ -496,7 +494,7 @@
 		initialize: function(){
 			
 			// sortable
-			if( this.settings.max != 1 ) {
+			if( this.o.max != 1 ) {
 				
 				// reference
 				var self = this,
@@ -536,11 +534,14 @@
 			
 			
 			// set column widths
-			this.$values.find('> .layout > .acf-table').each(function(){
+			// no longer needed due to refresh action in acf.pro model
+			/*
+this.$values.find('> .layout > .acf-table').each(function(){
 			
 				acf.pro.render_table( $(this) );
 				
 			});
+*/
 			
 			
 			// disable clone inputs
@@ -549,6 +550,16 @@
 			
 			// render
 			this.render();
+			
+		},
+		
+		show: function(){
+			
+			this.$values.find('.acf-field:visible').each(function(){
+				
+				acf.do_action('show_field', $(this));
+				
+			});
 			
 		},
 		
@@ -575,7 +586,7 @@
 			
 			
 			// row limit reached
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 				
 				this.$el.addClass('disabled');
 				this.$el.find('> .acf-hl .acf-button').addClass('disabled');
@@ -592,15 +603,15 @@
 		validate_add : function( layout ){
 			
 			// vadiate max
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 				
 				// vars
-				var identifier	= ( this.settings.max == 1 ) ? 'layout' : 'layouts',
+				var identifier	= ( this.o.max == 1 ) ? 'layout' : 'layouts',
 					s 			= acf._e('flexible_content', 'max');
 				
 				
 				// translate
-				s = s.replace('{max}', this.settings.max);
+				s = s.replace('{max}', this.o.max);
 				s = s.replace('{identifier}', acf._e('flexible_content', identifier));
 				
 				
@@ -650,15 +661,15 @@
 		validate_remove : function( layout ){
 			
 			// vadiate min
-			if( this.settings.min > 0 && this.count() <= this.settings.min ) {
+			if( this.o.min > 0 && this.count() <= this.o.min ) {
 				
 				// vars
-				var identifier	= ( this.settings.min == 1 ) ? 'layout' : 'layouts',
+				var identifier	= ( this.o.min == 1 ) ? 'layout' : 'layouts',
 					s 			= acf._e('flexible_content', 'min') + ', ' + acf._e('flexible_content', 'remove');
 				
 				
 				// translate
-				s = s.replace('{min}', this.settings.min);
+				s = s.replace('{min}', this.o.min);
 				s = s.replace('{identifier}', acf._e('flexible_content', identifier));
 				s = s.replace('{layout}', acf._e('flexible_content', 'layout'));
 				
@@ -948,6 +959,9 @@
 				$layout.attr('data-toggle', 'open');
 				$layout.children('.acf-input-table').show();
 				
+				// refresh layout
+				acf.do_action('refresh', $layout);
+				
 			} else {
 				
 				$layout.attr('data-toggle', 'closed');
@@ -1025,12 +1039,12 @@
 			
 			
 			// get options
-			this.settings = acf.get_data( this.$el );
+			this.o = acf.get_data( this.$el );
 			
 			
 			// min / max
-			this.settings.min = this.settings.min || 0;
-			this.settings.max = this.settings.max || 0;
+			this.o.min = this.o.min || 0;
+			this.o.max = this.o.max || 0;
 			
 		},
 		
@@ -1136,7 +1150,7 @@
 			
 			
 			// disable select
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 			
 				$a.addClass('disabled');
 				
@@ -1432,7 +1446,7 @@
 		add : function( image ){
 			
 			// validate
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 			
 				acf.validation.add_warning( this.$field, acf._e('gallery', 'max'));
 				
@@ -1478,9 +1492,9 @@
 				'select'	: function( attachment ){
 					
 					// override url
-					if( acf.isset(attachment, 'attributes', 'sizes', self.settings.preview_size, 'url') ) {
+					if( acf.isset(attachment, 'attributes', 'sizes', self.o.preview_size, 'url') ) {
 			    	
-				    	attachment.url = attachment.attributes.sizes[ self.settings.preview_size ].url;
+				    	attachment.url = attachment.attributes.sizes[ self.o.preview_size ].url;
 				    	
 			    	}
 			    	
@@ -1574,7 +1588,7 @@
 		add_attachment: function( e ){
 			
 			// validate
-			if( this.settings.max > 0 && this.count() >= this.settings.max ) {
+			if( this.o.max > 0 && this.count() >= this.o.max ) {
 			
 				acf.validation.add_warning( this.$field, acf._e('gallery', 'max'));
 				
@@ -1584,8 +1598,8 @@
 			
 			
 			// vars
-			var library = this.settings.library,
-				preview_size = this.settings.preview_size;
+			var library = this.o.library,
+				preview_size = this.o.preview_size;
 			
 			
 			// reference

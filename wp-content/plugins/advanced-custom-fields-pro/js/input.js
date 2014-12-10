@@ -2221,6 +2221,123 @@ frame.on('all', function( e ) {
 	});
 	
 	
+	/*
+	*  conditional_logic
+	*
+	*  description
+	*
+	*  @type	function
+	*  @date	21/02/2014
+	*  @since	3.5.1
+	*
+	*  @param	$post_id (int)
+	*  @return	$post_id (int)
+	*/
+		
+	acf.layout = acf.model.extend({
+		
+		active: 0,
+		
+		actions: {
+			'refresh': 	'refresh',
+		},
+		
+		refresh: function( $el ){
+			
+			//console.time('acf.width.render');
+			
+			// defaults
+			$el = $el || $('body');
+			
+			
+			// loop over visible fields
+			$el.find('.acf-fields:visible').each(function(){
+				
+				// vars
+				var $els = $(),
+					top = 0,
+					height = 0,
+					cell = -1;
+				
+				
+				// get fields
+				var $fields = $(this).children('.acf-field[data-width]:visible');
+				
+				
+				// bail early if no fields
+				if( !$fields.exists() ) {
+					
+					return;
+					
+				}
+				
+				
+				// reset fields
+				$fields.removeClass('acf-r0 acf-c0').css({'min-height': 0});
+				
+				
+				$fields.each(function( i ){
+					
+					// vars
+					var $el = $(this),
+						this_top = $el.position().top;
+					
+					
+					// set top
+					if( i == 0 ) {
+						
+						top = this_top;
+						
+					}
+					
+					
+					// detect new row
+					if( this_top != top ) {
+						
+						// set previous heights
+						$els.css({'min-height': (height+1)+'px'});
+						
+						// reset
+						$els = $();
+						top = $el.position().top; // don't use variable as this value may have changed due to min-height css
+						height = 0;
+						cell = -1;
+						
+					}
+					
+											
+					// increase
+					cell++;
+				
+					// set height
+					height = ($el.outerHeight() > height) ? $el.outerHeight() : height;
+				
+					// append
+					$els = $els.add( $el );
+					
+					// add classes
+					if( this_top == 0 ) {
+						
+						$el.addClass('acf-r0');
+						
+					} else if( cell == 0 ) {
+						
+						$el.addClass('acf-c0');
+						
+					}
+					
+				});
+				
+				
+			});
+			
+			//console.timeEnd('acf.width.render');
+
+			
+		}
+		
+	});
+	
 	
 	/*
 	*  conditional_logic
@@ -2335,6 +2452,10 @@ frame.on('all', function( e ) {
 				
 			}
 			
+			
+			// action for 3rd party customization
+			acf.do_action('refresh', $input);
+			
 		},
 		
 		render : function( $el ){
@@ -2348,11 +2469,15 @@ frame.on('all', function( e ) {
 			
 			
 			// get targets
-			var $targets = acf.get_fields( {}, $el );
+			var $targets = acf.get_fields( {}, $el, true );
 			
 			
 			// render fields
 			this.render_fields( $targets );
+			
+			
+			// action for 3rd party customization
+			acf.do_action('refresh', $el);
 			
 		},
 		
@@ -2368,12 +2493,6 @@ frame.on('all', function( e ) {
 				self.render_field( $(this) );
 				
 			});
-			
-			
-			// repeater hide column
-			
-			// action for 3rd party customization
-			//acf.do_action('conditional_logic_render_field');
 			
 		},
 		
@@ -2969,7 +3088,7 @@ frame.on('all', function( e ) {
 		
 		// vars
 		type:		'',
-		settings:	{},
+		o:			{},
 		actions:	{},
 		events:		{},
 		$field:		null,
@@ -3023,10 +3142,6 @@ frame.on('all', function( e ) {
 			
 			// focus on $field
 			this.$field = $field;
-			
-			
-			// merge in field's data
-			$.extend(this.settings, acf.get_data($field));
 			
 			
 			// callback
@@ -3476,6 +3591,8 @@ frame.on('all', function( e ) {
 		$input: null,
 		$hidden: null,
 		
+		o : {},
+		
 		actions: {
 			'ready':	'initialize',
 			'append':	'initialize'
@@ -3487,11 +3604,14 @@ frame.on('all', function( e ) {
 		
 		focus: function(){
 			
+			// get elements
 			this.$el = this.$field.find('.acf-date_picker');
 			this.$input = this.$el.find('input[type="text"]');
 			this.$hidden = this.$el.find('input[type="hidden"]');
 			
-			this.settings = acf.get_data( this.$el );
+			// get options
+			this.o = acf.get_data( this.$el );
+			
 		},
 		
 		initialize: function(){
@@ -3509,7 +3629,7 @@ frame.on('all', function( e ) {
 				yearRange		:	"-100:+100",
 				changeMonth		:	true,
 				showButtonPanel	:	true,
-				firstDay		:	this.settings.first_day
+				firstDay		:	this.o.first_day
 			});
 			
 			
@@ -3522,7 +3642,7 @@ frame.on('all', function( e ) {
 			
 			
 			// now change the format back to how it should be.
-			this.$input.datepicker( "option", "dateFormat", this.settings.display_format );
+			this.$input.datepicker( "option", "dateFormat", this.o.display_format );
 			
 			
 			// wrap the datepicker (only if it hasn't already been wrapped)
@@ -3569,9 +3689,11 @@ frame.on('all', function( e ) {
 		
 		focus: function(){
 			
+			// get elements
 			this.$el = this.$field.find('.acf-file-uploader');
 			
-			this.settings = acf.get_data( this.$el );
+			// get options
+			this.o = acf.get_data( this.$el );
 			
 		},
 		
@@ -3607,7 +3729,7 @@ frame.on('all', function( e ) {
 				mode:		'select',
 				type:		'',
 				multiple:	$repeater.exists(),
-				library:	this.settings.library,
+				library:	this.o.library,
 				
 				select: function( attachment, i ) {
 					
@@ -3779,35 +3901,36 @@ frame.on('all', function( e ) {
 
 (function($){
 	
-	/*
-	*  Location
-	*
-	*  static model for this field
-	*
-	*  @type	event
-	*  @date	1/06/13
-	*
-	*/
-	
-	acf.fields.google_map = {
+	acf.fields.google_map = acf.field.extend({
 		
-		$el : null,
+		type: 'google_map',
+		$el: null,
 		$input : null,
 		
-		o : {},
-		
-		ready : false,
+		status : '', // '', 'loading', 'ready'
 		geocoder : false,
 		map : false,
 		maps : {},
+		pending: $(),
 		
-		set : function( o ){
+		actions: {
+			'ready':	'initialize',
+			'append':	'initialize',
+			'show':		'show'
+		},
+		
+		events: {
+			'click a[data-name="clear-location"]': 	'clear',
+			'click a[data-name="find-location"]': 	'locate',
+			'click .title h4': 						'edit',
+			'keydown .search': 						'keydown',
+			'blur .search': 						'blur',
+		},
+		
+		focus: function(){
 			
-			// merge in new option
-			$.extend( this, o );
-			
-			
-			// find input
+			// get elements
+			this.$el = this.$field.find('.acf-google-map');
 			this.$input = this.$el.find('.value');
 			
 			
@@ -3816,38 +3939,126 @@ frame.on('all', function( e ) {
 			
 			
 			// get map
-			if( this.maps[ this.o.id ] )
-			{
-				this.map = this.maps[ this.o.id ];
-			}
-			
+			if( this.maps[ this.o.id ] ) {
 				
-			// return this for chaining
-			return this;
+				this.map = this.maps[ this.o.id ];
+				
+			}
 			
 		},
-		init : function(){
+		
+		/*
+		*  is_ready
+		*
+		*  This function will ensure google API is available and return a boolean for the current status
+		*
+		*  @type	function
+		*  @date	19/11/2014
+		*  @since	5.0.9
+		*
+		*  @param	n/a
+		*  @return	(boolean)
+		*/
+		
+		is_ready: function(){ 
 			
-			// geocode
-			if( !this.geocoder )
-			{
-				this.geocoder = new google.maps.Geocoder();
+			// debug
+			//console.log('is_ready: %o', this.status);
+			
+			// check
+			if( this.status == 'ready' ) {
+				
+				return true;
+				
+			} else if( this.status == 'loading' ) {
+				
+				return false;
+				
+			} else if( typeof google === 'undefined' ) {
+				
+				// reference
+				var self = this;
+				
+				
+				// se tstatus
+				self.status = 'loading';
+				
+				
+				// load API
+				$.getScript('https://www.google.com/jsapi', function(){
+					
+					// load maps
+				    google.load('maps', '3', { other_params: 'sensor=false&libraries=places', callback: function(){
+				    	
+				    	// set status
+				    	self.status = 'ready';
+				    	
+				    	
+				    	// initialize pending
+				    	self.initialize_pending();
+				        
+				    }});
+				    
+				});
+				
+				return false;
+					
 			}
 			
 			
-			// google maps is loaded and ready
-			this.ready = true;
+			// google must exist already
+			this.status = 'ready';
 			
 			
-			// render map
-			this.render();
-					
+			// return
+			return true;
+			
 		},
-		render : function(){
+		
+		initialize_pending: function(){
+			
+			// debug
+			//console.log('initialize_pending', this.status);
 			
 			// reference
-			var _this	= this,
-				_$el	= this.$el;
+			var self = this;
+			
+			this.pending.each(function(){
+				
+				self.doFocus( $(this) ).initialize();
+				
+			});
+			
+			
+			// reset
+			this.pending = $();
+			
+		},
+		
+		initialize: function(){
+			
+			// add to pending
+			if( !this.is_ready() ) {
+				
+				this.pending = this.pending.add( this.$field );
+				
+				return false;
+				
+			}
+			
+			
+			// load geocode
+			if( !this.geocoder ) {
+				
+				this.geocoder = new google.maps.Geocoder();
+				
+			}
+			
+			
+			// reference
+			var self = this,
+				$field = this.$field,
+				$el = this.$el;
 			
 			
 			// vars
@@ -3877,15 +4088,17 @@ frame.on('all', function( e ) {
 		    
 		    // add references
 		    this.map.$el = this.$el;
+		    this.map.$field = this.$field;
 		    
 		    
 		    // value exists?
 		    var lat = this.$el.find('.input-lat').val(),
 		    	lng = this.$el.find('.input-lng').val();
 		    
-		    if( lat && lng )
-		    {
-			    this.update( lat, lng ).center();
+		    if( lat && lng ) {
+			    
+			    this.update(lat, lng).center();
+			    
 		    }
 		    
 		    
@@ -3893,9 +4106,10 @@ frame.on('all', function( e ) {
 			google.maps.event.addListener(autocomplete, 'place_changed', function( e ) {
 			    
 			    // reference
-			    var $el = this.map.$el;
-
-
+			    var $el = this.map.$el,
+			    	$field = this.map.$field;
+					
+					
 			    // manually update address
 			    var address = $el.find('.search').val();
 			    $el.find('.input-address').val( address );
@@ -3906,45 +4120,47 @@ frame.on('all', function( e ) {
 			    var place = this.getPlace();
 			    
 			    
-			    // validate
-			    if( place.geometry )
-			    {
+			    // if place exists
+			    if( place.geometry ) {
+				    
 			    	var lat = place.geometry.location.lat(),
 						lng = place.geometry.location.lng();
 						
-						
-				    _this.set({ $el : $el }).update( lat, lng ).center();
+					
+					self.doFocus( $field ).update( lat, lng ).center();
+				    
+				    // bail early
+				    return;
 			    }
-			    else
-			    {
-				    // client hit enter, manually get the place
-				    _this.geocoder.geocode({ 'address' : address }, function( results, status ){
-				    	
-				    	// validate
-						if( status != google.maps.GeocoderStatus.OK )
-						{
-							console.log('Geocoder failed due to: ' + status);
-							return;
-						}
+			    
+			    
+			    // client hit enter, manually get the place
+			    self.geocoder.geocode({ 'address' : address }, function( results, status ){
+			    	
+			    	// validate
+					if( status != google.maps.GeocoderStatus.OK ) {
 						
-						if( !results[0] )
-						{
-							console.log('No results found');
-							return;
-						}
+						console.log('Geocoder failed due to: ' + status);
+						return;
 						
+					} else if( !results[0] ) {
 						
-						// get place
-						place = results[0];
+						console.log('No results found');
+						return;
 						
-						var lat = place.geometry.location.lat(),
-							lng = place.geometry.location.lng();
-							
-							
-					    _this.set({ $el : $el }).update( lat, lng ).center();
-					    
-					});
-			    }
+					}
+					
+					
+					// get place
+					place = results[0];
+					
+					var lat = place.geometry.location.lat(),
+						lng = place.geometry.location.lng();
+						
+					
+					self.doFocus( $field ).update( lat, lng ).center();
+				    
+				});
 			    
 			});
 		    
@@ -3952,7 +4168,7 @@ frame.on('all', function( e ) {
 		    google.maps.event.addListener( this.map.marker, 'dragend', function(){
 		    	
 		    	// reference
-			    var $el = this.map.$el;
+			    var $field = this.map.$field;
 			    
 			    
 		    	// vars
@@ -3960,7 +4176,7 @@ frame.on('all', function( e ) {
 					lat = position.lat(),
 			    	lng = position.lng();
 			    	
-				_this.set({ $el : $el }).update( lat, lng ).sync();
+				self.doFocus( $field ).update( lat, lng ).sync();
 			    
 			});
 			
@@ -3968,7 +4184,7 @@ frame.on('all', function( e ) {
 			google.maps.event.addListener( this.map, 'click', function( e ) {
 				
 				// reference
-			    var $el = this.$el;
+			    var $field = this.$field;
 			    
 			    
 				// vars
@@ -3976,15 +4192,13 @@ frame.on('all', function( e ) {
 					lng = e.latLng.lng();
 				
 				
-				_this.set({ $el : $el }).update( lat, lng ).sync();
+				self.doFocus( $field ).update( lat, lng ).sync();
 			
 			});
-
 			
 			
 	        // add to maps
 	        this.maps[ this.o.id ] = this.map;
-	        
 	        
 		},
 		
@@ -4012,7 +4226,7 @@ frame.on('all', function( e ) {
 	        
 	        
 	        // validation
-			this.$el.closest('.acf-field').removeClass('error');
+			this.$field.removeClass('error');
 			
 			
 	        // return for chaining
@@ -4028,10 +4242,11 @@ frame.on('all', function( e ) {
 			
 			
 			// if marker exists, center on the marker
-			if( position )
-			{
+			if( position ) {
+				
 				lat = position.lat();
 				lng = position.lng();
+				
 			}
 			
 			
@@ -4040,6 +4255,7 @@ frame.on('all', function( e ) {
 			
 			// set center of map
 	        this.map.setCenter( latlng );
+	        
 		},
 		
 		sync : function(){
@@ -4056,16 +4272,16 @@ frame.on('all', function( e ) {
 			this.geocoder.geocode({ 'latLng' : latlng }, function( results, status ){
 				
 				// validate
-				if( status != google.maps.GeocoderStatus.OK )
-				{
+				if( status != google.maps.GeocoderStatus.OK ) {
+					
 					console.log('Geocoder failed due to: ' + status);
 					return;
-				}
-				
-				if( !results[0] )
-				{
+					
+				} else if( !results[0] ) {
+					
 					console.log('No results found');
 					return;
+					
 				}
 				
 				
@@ -4085,26 +4301,28 @@ frame.on('all', function( e ) {
 			
 			// return for chaining
 	        return this;
+	        
 		},
 		
 		locate : function(){
 			
 			// reference
-			var _this	= this,
-				_$el	= this.$el;
+			var self = this,
+				$field = this.$field;
 			
 			
 			// Try HTML5 geolocation
-			if( ! navigator.geolocation )
-			{
+			if( ! navigator.geolocation ) {
+				
 				alert( acf.l10n.google_map.browser_support );
 				return this;
+				
 			}
 			
 			
 			// show loading text
-			_$el.find('.title h4').text(acf.l10n.google_map.locating + '...');
-			_$el.addClass('active');
+			this.$el.find('.title h4').text(acf.l10n.google_map.locating + '...');
+			this.$el.addClass('active');
 			
 		    navigator.geolocation.getCurrentPosition(function(position){
 		    	
@@ -4112,12 +4330,13 @@ frame.on('all', function( e ) {
 				var lat = position.coords.latitude,
 			    	lng = position.coords.longitude;
 			    	
-				_this.set({ $el : _$el }).update( lat, lng ).sync().center();
+				self.doFocus( $field ).update( lat, lng ).sync().center();
 				
 			});
 
 				
 		},
+		
 		
 		clear : function(){
 			
@@ -4161,151 +4380,41 @@ frame.on('all', function( e ) {
 			// center map
 			this.center();
 			
-		}
-
-	
-	};
-	
-	
-	/*
-	*  acf/setup_fields
-	*
-	*  run init function on all elements for this field
-	*
-	*  @type	event
-	*  @date	20/07/13
-	*
-	*  @param	{object}	e		event object
-	*  @param	{object}	el		DOM object which may contain new ACF elements
-	*  @return	N/A
-	*/
-	
-	acf.add_action('ready append', function( $el ){
+		},
 		
-		//vars
-		var $fields = acf.get_fields({ type : 'google_map'}, $el);
-		
-		
-		// validate
-		if( !$fields.exists() )
-		{
-			return;
-		}
-		
-		
-		// validate google
-		if( typeof google === 'undefined' )
-		{
-			$.getScript('https://www.google.com/jsapi', function(){
+		keydown: function( e ){
 			
-			    google.load('maps', '3', { other_params: 'sensor=false&libraries=places', callback: function(){
+			// prevent form from submitting
+			if( e.which == 13 ) {
+				
+				e.preventDefault();
 			    
-			        $fields.each(function(){
-					
-						acf.fields.google_map.set({ $el : $(this).find('.acf-google-map') }).init();
-						
-					});
-			        
-			    }});
-			});
+			}
 			
-		}
-		else
-		{
-			$fields.each(function(){
+		},
+		
+		blur: function(){
+			
+			// has a value?
+			if( this.$el.find('.input-lat').val() ) {
 				
-				acf.fields.google_map.set({ $el : $(this).find('.acf-google-map') }).init();
+				this.$el.addClass('active');
 				
-			});
+			}
+			
+		},
+		
+		show: function(){
+			
+			if( this.is_ready() ) {
+				
+				this.refresh();
+				
+			}
 			
 		}
 		
-		
 	});
-	
-	
-	/*
-	*  Events
-	*
-	*  jQuery events for this field
-	*
-	*  @type	function
-	*  @date	1/03/2011
-	*
-	*  @param	N/A
-	*  @return	N/A
-	*/
-	
-	$(document).on('click', '.acf-google-map a[data-name="clear-location"]', function( e ){
-		
-		e.preventDefault();
-		
-		acf.fields.google_map.set({ $el : $(this).closest('.acf-google-map') }).clear();
-		
-		$(this).blur();
-		
-	});
-	
-	
-	$(document).on('click', '.acf-google-map a[data-name="find-location"]', function( e ){
-		
-		e.preventDefault();
-		
-		acf.fields.google_map.set({ $el : $(this).closest('.acf-google-map') }).locate();
-		
-		$(this).blur();
-		
-	});
-	
-	$(document).on('click', '.acf-google-map .title h4', function( e ){
-		
-		e.preventDefault();
-		
-		acf.fields.google_map.set({ $el : $(this).closest('.acf-google-map') }).edit();
-			
-	});
-	
-	$(document).on('keydown', '.acf-google-map .search', function( e ){
-		
-		// prevent form from submitting
-		if( e.which == 13 )
-		{
-		    return false;
-		}
-			
-	});
-	
-	$(document).on('blur', '.acf-google-map .search', function( e ){
-		
-		// vars
-		var $el = $(this).closest('.acf-google-map');
-		
-		
-		// has a value?
-		if( $el.find('.input-lat').val() )
-		{
-			$el.addClass('active');
-		}
-			
-	});
-	
-	acf.add_action('show_field', function( $field ){
-		
-		// validate
-		if( ! acf.fields.google_map.ready )
-		{
-			return;
-		}
-		
-		
-		// validate
-		if( acf.is_field($field, {type : 'google_map'}) )
-		{
-			acf.fields.google_map.set({ $el : $field.find('.acf-google-map') }).refresh();
-		}
-		
-	});
-	
 
 })(jQuery);
 
@@ -4330,9 +4439,11 @@ frame.on('all', function( e ) {
 		
 		focus: function(){
 			
+			// get elements
 			this.$el = this.$field.find('.acf-image-uploader');
 			
-			this.settings = acf.get_data( this.$el );
+			// get options
+			this.o = acf.get_data( this.$el );
 			
 		},
 		
@@ -4367,7 +4478,7 @@ frame.on('all', function( e ) {
 				'mode'		: 'select',
 				'type'		: 'image',
 				'multiple'	: $repeater.exists(),
-				'library'	: this.settings.library,
+				'library'	: this.o.library,
 				'select'	: function( attachment, i ) {
 					
 					// select / add another image field?
@@ -4453,9 +4564,9 @@ frame.on('all', function( e ) {
 			
 			
 			// check for preview size
-			if( acf.isset(attachment.attributes, 'sizes', this.settings.preview_size, 'url') ) {
+			if( acf.isset(attachment.attributes, 'sizes', this.o.preview_size, 'url') ) {
 	    	
-		    	image.url = attachment.attributes.sizes[ this.settings.preview_size ].url;
+		    	image.url = attachment.attributes.sizes[ this.o.preview_size ].url;
 		    	
 	    	}
 	    	
@@ -4869,12 +4980,14 @@ acf.add_action('ready append', function( $el ){
 		
 		focus: function(){
 			
+			// get elements
 			this.$el = this.$field.find('.acf-relationship');
 			this.$input = this.$el.find('.acf-hidden input');
 			this.$choices = this.$el.find('.choices'),
 			this.$values = this.$el.find('.values');
 			
-			this.settings = acf.get_data( this.$el );
+			// get options
+			this.o = acf.get_data( this.$el );
 			
 		},
 		
@@ -4988,13 +5101,13 @@ var scroll_timer = null;
 			// vars
 			var data = acf.prepare_for_ajax({
 				action:		'acf/fields/relationship/query',
-				field_key:	acf.get_field_key($field),
+				field_key:	$field.data('key'),
 				post_id:	acf.get('post_id'),
 			});
 			
 			
 			// merge in wrap data
-			// don't use this.settings becuase they are outdated
+			// don't use this.o becuase they are outdated
 			$.extend(data, acf.get_data( this.$el ));
 			
 			
@@ -5060,7 +5173,7 @@ var scroll_timer = null;
 			
 				
 				// add message
-				if( this.settings.paged == 1 ) {
+				if( this.o.paged == 1 ) {
 				
 					this.$choices.children('.list').append('<p>' + acf._e('relationship', 'empty') + '</p>');
 			
@@ -5088,9 +5201,9 @@ var scroll_timer = null;
 			
 			
 			// underline search match
-			if( this.settings.s ) {
+			if( this.o.s ) {
 			
-				var s = this.settings.s;
+				var s = this.o.s;
 				
 				$new.find('.acf-rel-item').each(function(){
 					
@@ -5216,11 +5329,11 @@ var scroll_timer = null;
 		add_item: function( e ){
 			
 			// max posts
-			if( this.settings.max > 0 ) {
+			if( this.o.max > 0 ) {
 			
-				if( this.$values.find('.acf-rel-item').length >= this.settings.max ) {
+				if( this.$values.find('.acf-rel-item').length >= this.o.max ) {
 				
-					alert( acf._e('relationship', 'max').replace('{max}', this.settings.max) );
+					alert( acf._e('relationship', 'max').replace('{max}', this.o.max) );
 					
 					return;
 					
@@ -5443,7 +5556,7 @@ var scroll_timer = null;
 				results: function(data, page){
 					
 					return {
-						results	: data
+						results	: data || {}
 					};
 					
 				}
@@ -5578,12 +5691,9 @@ var scroll_timer = null;
 	acf.fields.select = acf.field.extend({
 		
 		type: 'select',
+		pagination: false,
 		
 		$select: null,
-		settings: {
-			'action':		'',
-			'pagination':	false
-		},
 		
 		actions: {
 			'ready':	'render',
@@ -5605,33 +5715,35 @@ var scroll_timer = null;
 			}
 			
 			
-			// merge in select's settings
-			$.extend(this.settings, acf.get_data( this.$select ));
+			// get options
+			this.o = acf.get_data( this.$select );
 			
 			
-			// update action based on type			
-			this.settings.action = 'acf/fields/' + this.type + '/query';
+			// customize o
+			this.o.pagination = this.pagination;
+			this.o.key = this.$field.data('key');	
+			this.o.action = 'acf/fields/' + this.type + '/query';
 			
 		},
 		
 		render: function(){
 			
 			// validate ui
-			if( !this.$select.exists() || !this.settings.ui ) {
+			if( !this.$select.exists() || !this.o.ui ) {
 				
 				return false;
 				
 			}
 			
 			
-			add_select2( this.$select, this.settings );
+			add_select2( this.$select, this.o );
 			
 		},
 		
 		remove: function(){
 			
 			// validate ui
-			if( !this.$select.exists() || !this.settings.ui ) {
+			if( !this.$select.exists() || !this.o.ui ) {
 				
 				return false;
 				
@@ -5647,7 +5759,7 @@ var scroll_timer = null;
 	
 	// taxonomy
 	acf.fields.taxonomy = acf.fields.select.extend({
-		
+
 		type: 'taxonomy'
 		
 	});
@@ -5665,18 +5777,16 @@ var scroll_timer = null;
 	acf.fields.post_object = acf.fields.select.extend({
 		
 		type: 'post_object',
-		
-		settings: {
-			'pagination':	true
-		}
+		pagination: true
 		
 	});
 	
 	
 	// page_link
-	acf.fields.page_link = acf.fields.post_object.extend({
+	acf.fields.page_link = acf.fields.select.extend({
 		
 		type: 'page_link',
+		pagination: true
 		
 	});
 	
@@ -5716,7 +5826,7 @@ var scroll_timer = null;
 			// vars
 			var $el = this.$field.find('.acf-tab'),
 				$group = this.$field.siblings('.acf-tab-wrap'),
-				key = this.settings.key;
+				key = this.$field.data('key');
 			
 			
 			// template
@@ -5804,6 +5914,10 @@ var scroll_timer = null;
 				}
 				
 			});
+			
+			
+			// action for 3rd party customization
+			acf.do_action('refresh');
 
 		},
 		
@@ -5850,7 +5964,7 @@ var scroll_timer = null;
 		hide: function( $field, context ){
 			
 			// vars
-			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + this.settings.key + '"]'),
+			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + $field.data('key') + '"]'),
 				$li = $a.parent();
 				
 			
@@ -5902,7 +6016,7 @@ var scroll_timer = null;
 		show: function( $field, context ){
 			
 			// vars
-			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + this.settings.key + '"]'),
+			var $a = $field.siblings('.acf-tab-wrap').find('a[data-key="' + $field.data('key') + '"]'),
 				$li = $a.parent();
 				
 			
@@ -6445,20 +6559,20 @@ var scroll_timer = null;
 		
 		focus: function(){
 			
-			// update vars
+			// get elements
 			this.$el = this.$field.find('.wp-editor-wrap').last();
 			this.$textarea = this.$el.find('textarea');
 			
+			// get options
+			this.o = acf.get_data( this.$el );
+			this.o.id = this.$textarea.attr('id');
 			
-			// settings
-			this.settings = acf.get_data( this.$el );
-			this.settings.id = this.$textarea.attr('id');
 		},
 		
 		initialize: function(){
 			
 			// bail early if no tinymce
-			if( typeof tinyMCEPreInit === 'undefined' ) {
+			if( typeof tinyMCEPreInit === 'undefined' || typeof tinymce === 'undefined' ) {
 				
 				return false;
 				
@@ -6498,7 +6612,6 @@ var scroll_timer = null;
 			
 		},
 		
-		
 		get_mceInit : function(){
 			
 			// reference
@@ -6506,17 +6619,17 @@ var scroll_timer = null;
 				
 				
 			// vars
-			var toolbar = this.get_toolbar( this.settings.toolbar ),
+			var toolbar = this.get_toolbar( this.o.toolbar ),
 				mceInit = $.extend({}, tinyMCEPreInit.mceInit.acf_content);
 			
 			
 			// selector
-			mceInit.selector = '#' + this.settings.id;
+			mceInit.selector = '#' + this.o.id;
 			
 			
 			// id
-			mceInit.id = this.settings.id; // tinymce v4
-			mceInit.elements = this.settings.id; // tinymce v3
+			mceInit.id = this.o.id; // tinymce v4
+			mceInit.elements = this.o.id; // tinymce v3
 			
 			
 			// toolbar
@@ -6589,6 +6702,12 @@ var scroll_timer = null;
 						
 					});
 					
+					/*
+ed.on('ResizeEditor', function(e) {
+					    console.log(e);
+					});
+*/
+					
 				};
 			
 			}
@@ -6610,7 +6729,7 @@ var scroll_timer = null;
 			
 			
 			// id
-			qtInit.id = this.settings.id;
+			qtInit.id = this.o.id;
 			
 			
 			// hook for 3rd party customization
@@ -6642,8 +6761,8 @@ var scroll_timer = null;
 			try {
 				
 				// vars
-				var ed = tinyMCE.get( this.settings.id ),
-					txtarea_el = tinyMCE.DOM.get( this.settings.id );
+				var ed = tinyMCE.get( this.o.id ),
+					txtarea_el = tinyMCE.DOM.get( this.o.id );
 					val = txtarea_el.value;
 					
 				
@@ -6675,7 +6794,7 @@ var scroll_timer = null;
 			
 			try {
 				
-				tinyMCE.init( tinyMCEPreInit.mceInit[ this.settings.id ] );
+				tinyMCE.init( tinyMCEPreInit.mceInit[ this.o.id ] );
 				
 			} catch(e) {}
 			

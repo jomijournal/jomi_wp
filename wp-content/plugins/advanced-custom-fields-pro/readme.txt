@@ -107,6 +107,24 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 5.1.4 =
+* Taxonomy field: Major improvement to save/load setting allowing for different values on multiple sub fields
+* Google Map field: Fixed render glitch on sub fields when shown by a tab field
+* Code: Fixed bug where Select2 would continuously load when no results found
+* Core: Fixed bug where translated field groups were lost during DB migration to v5
+* Core: Minor fixes and improvements
+
+= 5.1.3 =
+* Repeater field: Added new 'block' layout style
+* Flexible Content field: Added new 'block' layout style
+* Core: Added new field setting 'wrapper' including width, class and id
+* Core: Minor JS speed improvement for sub field conditional logic
+* Core: Minor fixes and improvements
+* Language: Updated Dutch translation - thanks to Patrick Heiloo
+
+= 5.1.2 =
+* API: Fixed various bugs with the have_rows() function
+
 = 5.1.1 =
 * Image field: Added basic file uploader for non logged in users
 * File field: Added basic file uploader for non logged in users
@@ -139,7 +157,6 @@ http://support.advancedcustomfields.com/
 * Core: Minor fixes and improvements
 * Language: Added Turkish translation - thanks to Ramazan POLAT
 * Language: Updated Persian translation - thanks to Kamel Kimiaei
-
 
 = 5.0.8 =
 * Checkbox field: Fixed PHP error when editing field default value
