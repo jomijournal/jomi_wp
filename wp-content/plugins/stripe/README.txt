@@ -1,8 +1,8 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.7.4
-Tested up to: 4.0
+Requires at least: 3.8.5
+Tested up to: 4.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,9 +113,15 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.9 =
+
+* Test/Live mode toggle switch updated. Now CSS only.
+
 = 1.2.8 =
 
 * Updated to most recent Stripe PHP library (v1.17.3).
+* Updated to most recent Bootstrap Switch library (v3.2.2).
+* Tested up to WordPress 4.1.
 
 = 1.2.7 =
 
@@ -163,7 +169,7 @@ There are three ways to install this plugin.
 * Added failure_redirect_url shortcode attribute.
 * Updated sc_redirect filter to allow modification for failed redirect URLs.
 * Fixed compatibility issue with the [WordPress SEO plugin](https://wordpress.org/plugins/wordpress-seo/).
-* Tested with WordPress 4.0.
+* Tested up to WordPress 4.0.
 
 = 1.1.2 =
 

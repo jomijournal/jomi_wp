@@ -21,7 +21,7 @@ class Stripe_Checkout {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.2.8';
+	protected $version = '1.2.9';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -78,9 +78,6 @@ class Stripe_Checkout {
 
 		// Enqueue admin styles.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-		
-		// Enqueue admin scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 		// Add admin notice after plugin activation. Also check if should be hidden.
 		add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
@@ -181,19 +178,6 @@ class Stripe_Checkout {
 			wp_enqueue_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
 		}
 	}
-	
-	/**
-	 * Load admin scripts
-	 * 
-	 * @since 1.1.1
-	 */
-	public function enqueue_admin_scripts() {
-		
-		if( $this->viewing_this_plugin() ) {
-			wp_enqueue_script( 'bootstrap-switch', SC_URL . 'admin/js/bootstrap-switch.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( $this->plugin_slug . '-admin', SC_URL . 'admin/js/admin.js', array( 'jquery', 'bootstrap-switch' ), $this->version, true );
-		}
-	}
 
 	/**
 	 * Enqueue admin-specific style sheets for this plugin's admin pages only.
@@ -203,8 +187,8 @@ class Stripe_Checkout {
 	public function enqueue_admin_styles() {
 
 		if ( $this->viewing_this_plugin() ) {
-			wp_enqueue_style( 'bootstrap-switch', SC_URL . 'admin/css/bootstrap-switch.min.css', array(), $this->version );
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( 'bootstrap-switch' ), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_URL . 'admin/css/toggle-switch.css', array(), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( $this->plugin_slug .'-toggle-switch' ), $this->version );
 		}
 	}
 	
@@ -333,7 +317,7 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		if( ! class_exists( 'Stripe' ) ) {
-			require_once( 'libraries/stripe-php/lib/Stripe.php' );
+			require_once( 'libraries/stripe-php/Stripe.php' );
 		}
 		
 		// Include any necessary functions

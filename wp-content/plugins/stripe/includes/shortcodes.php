@@ -76,7 +76,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
 	
 	$html .= '<script
-				src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+				src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 				data-key="' . $data_key . '" ' .
 				( ! empty( $image_url ) ? 'data-image="' . $image_url . '" ' : '' ) . 
 				( ! empty( $name ) ? 'data-name="' . $name . '" ' : '' ) .
