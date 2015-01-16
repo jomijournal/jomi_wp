@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 		<th width="70"><?php _e ('Tracked', 'redirection'); ?>:</th>
-		<td><label><input type="checkbox" name="tracking"<?php echo $this->checked ($group->tracking) ?>/> <span class="sub"><?php _e ('Whether to track \'hits\' to items', 'redirection'); ?></span></label></td>
+		<td><label><input type="checkbox" name="tracking"<?php echo checked ($group->tracking) ?>/> <span class="sub"><?php _e ('Whether to track \'hits\' to items', 'redirection'); ?></span></label></td>
 	</tr>
 	<tr>
 		<th width="70"><?php _e ('Enabled', 'redirection'); ?>:</th>
@@ -21,7 +21,7 @@
 
 				<input type="hidden" name="action" value="red_group_save"/>
 				<input type="hidden" name="id" value="<?php echo esc_attr( $group->id ); ?>"/>
-				<input type="hidden" name="_ajax_nonce" value="<?php echo wp_create_nonce ('redirection-group_save_'.$group->id); ?>"/>
+				<?php wp_nonce_field( 'redirection-group_save_'.$group->id ) ?>
 			</div>
 
 			<div class="table-loading">

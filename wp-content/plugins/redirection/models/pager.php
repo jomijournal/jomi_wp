@@ -42,7 +42,7 @@ class Redirection_Table extends WP_List_Table {
 	}
 
 	function column_hits( $item ) {
-		return esc_html( $item->last_count );
+		return esc_html( number_format_i18n( $item->last_count, 0 ) );
 	}
 
 	function column_url( $item ) {
@@ -60,7 +60,11 @@ class Redirection_Table extends WP_List_Table {
 			$after = '</span>';
 		}
 
-		return sprintf( '%1$s %2$s', $before.'<a href="'.esc_url( $item->url ).'">'.esc_html( $item->url ).'</a>'.$after, $this->row_actions( $actions ) );
+		$title = $item->url;
+		if ( $item->title )
+			$title = $item->title;
+
+		return sprintf( '%1$s %2$s', $before.'<a href="'.esc_url( $item->url ).'">'.esc_html( $title ).'</a>'.$after, $this->row_actions( $actions ) );
 	}
 
 	function column_cb($item){
@@ -159,7 +163,7 @@ class Redirection_Table extends WP_List_Table {
 		$screen = get_current_screen();
 
 		$per_page = 25;
-		if ( $screen->get_option( 'per_page', 'option' ) ) {
+		if ( $screen && $screen->get_option( 'per_page', 'option' ) ) {
 			$per_page = intval( get_user_meta( $current_user->ID, $screen->get_option( 'per_page', 'option' ), true ) );
 			if ( $per_page === 0 )
 				$per_page = 25;
@@ -373,6 +377,8 @@ class Redirection_Group_Table extends WP_List_Table {
 }
 
 class Redirection_Log_Table extends WP_List_Table {
+	const REFERRER_MAX = 120;
+	const TARGET_MAX = 80;
 	private $lookup;
 
 	function __construct( $options ) {
@@ -402,7 +408,7 @@ class Redirection_Log_Table extends WP_List_Table {
 
 	function column_url( $item ) {
 		$actions = array(
-			'target' => esc_html( $item->sent_to ),
+			'target' => esc_html( substr( $item->sent_to, 0, self::TARGET_MAX ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="'.esc_url( $item->url ).'">'.esc_html( $item->show_url( $item->url ) ).'</a>', $this->row_actions( $actions ) );
@@ -410,7 +416,7 @@ class Redirection_Log_Table extends WP_List_Table {
 
 	function column_referrer( $item ) {
 		$actions = array(
-			'agent' => esc_html( $item->agent ),
+			'agent' => esc_html( substr( $item->agent, 0, self::REFERRER_MAX ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="'.esc_url( $item->referrer ).'">'.esc_html( parse_url( $item->referrer, PHP_URL_HOST ) ).'</a>', $this->row_actions( $actions ) );
@@ -672,7 +678,7 @@ class Redirection_Module_Table extends WP_List_Table {
 	}
 
 	function column_hits( $item ) {
-		return esc_html( $item->hits() );
+		return esc_html( number_format_i18n( $item->hits(), 0 ) );
 	}
 
 	function column_moduletype( $item ) {
