@@ -6,5 +6,5 @@ Disallow: /dbninja/
 Disallow: /unit-test/
 Disallow: /coreconf/
 
-Sitemap: https://www.jomi.com/sitemap.xml
+Sitemap: https://www.jomi.com/sitemap_index.xml
 Sitemap: http://app.wistia.com/sitemaps/47561.xml
