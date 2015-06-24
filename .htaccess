@@ -1,2 +1,1 @@
-php_value "auto_prepend_file" /usr/share/nginx/html/jomi_wp/wejnswpwhitespacefix.php
-
+php_value "auto_prepend_file" /usr/share/nginx/html/wejnswpwhitespacefix.php
