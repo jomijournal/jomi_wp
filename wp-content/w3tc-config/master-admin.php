@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'version' => '0.9.4',
+	'version' => '0.9.4.1',
 	'browsercache.configuration_sealed' => false,
 	'cdn.configuration_sealed' => false,
 	'common.install' => 1406659759,
@@ -29,5 +29,5 @@ return array(
 	'notes.hide_extensions' => array(
 		0 => 'wordpress-seo',
 	),
-	'evaluation.reminder' => 1416929234,
+	'evaluation.reminder' => 1455829124,
 );

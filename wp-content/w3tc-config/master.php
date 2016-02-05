@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'version' => '0.9.4',
+	'version' => '0.9.4.1',
 	'cluster.messagebus.debug' => false,
 	'cluster.messagebus.enabled' => false,
 	'cluster.messagebus.sns.region' => '',
@@ -396,7 +396,7 @@ return array(
 		3 => '{wp_content_dir}/themes/jomi/assets/css/main.min.css',
 		4 => '{wp_content_dir}/themes/jomi/assets/js/scripts.min.js',
 	),
-	'cdn.reject.ssl' => false,
+	'cdn.reject.ssl' => true,
 	'cdncache.enabled' => false,
 	'varnish.enabled' => false,
 	'varnish.debug' => false,
