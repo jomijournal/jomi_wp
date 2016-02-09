@@ -67,9 +67,11 @@ echo time to go manual for the rest of the instructions...
 
 ##### SUBMODULE
 
+# Nikita: may need to adjust permissions on .git directory for this to work
+# do not use sudo - that uses a different SSH key
  
 # 184  git submodule sync
-#185  git submodule init
+# 185  git submodule init
 # 186  git submodule --list
 # 187  git config --list |egrep ^submodule
 # 188  git submodule update
@@ -83,6 +85,7 @@ echo time to go manual for the rest of the instructions...
 #$ git checkout master
 # 191  git pull -u origin master
 
+# cd wp-content/themes/jomi
 
 
 
@@ -99,6 +102,8 @@ echo time to go manual for the rest of the instructions...
  #sudo bower install --allow-root
  #npm install
  #sudo grunt build
+ 
+ # Nikita: WHERE ARE THE PHAR FILES?
  # 200  php composer.phar install
  # 201  sudo apt-get install php5-curl
  # 202  php composer.phar install
