@@ -104,12 +104,13 @@ echo time to go manual for the rest of the instructions...
  #sudo grunt build
  
  # Nikita: WHERE ARE THE PHAR FILES?
+ # Nikita: curl -sS https://getcomposer.org/installer | php # QUESTION: where should this be downloaded?
  # 200  php composer.phar install
- # 201  sudo apt-get install php5-curl
- # 202  php composer.phar install
+ # (NO NEED) 201  sudo apt-get install php5-curl
+ # (NO NEED) 202  php composer.phar install
  # 203  php composer.phar update
  # 204  php composer.phar require geoip2/geoip2:~0.7.0
- #  205  grunt build
+ # 205  grunt build
 
 
 ###Permissions  todo
