@@ -1,5 +1,7 @@
 #! /bin/bash -x
 
+### DO NOT USE - THIS IS NOT TESTED
+
 ###Debian or Ubuntu only!
 
 #https://github.com/jomijournal/jomi_wp/raw/master/install.sh
@@ -97,11 +99,11 @@ echo time to go manual for the rest of the instructions...
  # 198  bower install
  #be sure to npm install after bower.
  # 199  sudo npm install
- # npm install
- #sudo npm install --unsafe-perm
- #sudo bower install --allow-root
- #npm install
- #sudo grunt build
+ # REMOVE npm install
+ # REMOVE sudo npm install --unsafe-perm
+ # REMOVE sudo bower install --allow-root
+ # REMOVE npm install
+ # sudo grunt build
  
  # Nikita: WHERE ARE THE PHAR FILES?
  # Nikita: curl -sS https://getcomposer.org/installer | php # QUESTION: where should this be downloaded?
@@ -109,8 +111,8 @@ echo time to go manual for the rest of the instructions...
  # (NO NEED) 201  sudo apt-get install php5-curl
  # (NO NEED) 202  php composer.phar install
  # 203  php composer.phar update
- # 204  php composer.phar require geoip2/geoip2:~0.7.0
- # 205  grunt build
+ # (NO NEED) 204  php composer.phar require geoip2/geoip2:~0.7.0
+ # (NO NEED) 205  grunt build
 
 
 ###Permissions  todo
