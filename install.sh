@@ -85,9 +85,15 @@ echo ...done!
 
 #clone jomi_theme
 echo CLONING JOMI_THEME
+
+#untested
+git submodule init
+git submodule update
+
 #sudo rm -r -f jomi
 #git clone https://github.com/jomijournal/jomi_theme.git jomi
 cd jomi
+git checkout master
 echo ...done!
 
 #node stuff
