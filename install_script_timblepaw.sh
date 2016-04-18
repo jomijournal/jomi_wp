@@ -94,26 +94,14 @@ echo time to go manual for the rest of the instructions...
 ####NPM
  #193  sudo npm install -g bower
  #194  sudo npm install -g grunt-cli
- ##### needs sudo err 195  npm install
  #196  sudo npm install
- # 198  bower install
- #be sure to npm install after bower.
- # 199  sudo npm install
- # REMOVE npm install
- # REMOVE sudo npm install --unsafe-perm
- # REMOVE sudo bower install --allow-root
- # REMOVE npm install
- # sudo grunt build
+ #198  bower install
+ #199  sudo npm install
+ #sudo grunt build
  
- # Nikita: WHERE ARE THE PHAR FILES?
- # Nikita: curl -sS https://getcomposer.org/installer | php # QUESTION: where should this be downloaded?
+ # curl -sS https://getcomposer.org/installer | php # QUESTION: where should this be downloaded?
  # 200  php composer.phar install
- # (NO NEED) 201  sudo apt-get install php5-curl
- # (NO NEED) 202  php composer.phar install
  # 203  php composer.phar update
- # (NO NEED) 204  php composer.phar require geoip2/geoip2:~0.7.0
- # (NO NEED) 205  grunt build
-
 
 ###Permissions  todo
 
